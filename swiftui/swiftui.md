@@ -8,6 +8,8 @@ Uses [Declarative Syntax](https://developer.apple.com/xcode/swiftui/).
 
 Using provided font sizes scales text automatically to fit device / accessibility needs.
 
+Unlike developing for web, when developing with SwiftUI, you start with content first, and then build a parent container around it.
+
 ## Getting Started
 
 1. New XCode Project
@@ -76,6 +78,18 @@ Stacks can be modified: `VStack(spacing: 20) {}` or `ZStack(alignment: .topLeadi
 - `.opacity(0.1)`
 - `.blur(radius: 20)` for directing focus (very perfomant on iOS)
 
+### Smooth Corners
+
+The `.cornerRadius()` modifier clips content. Use `.clipShape()` to preserve content:
+
+```Swift
+.clipShape(RoundedRectange(cornerRadius: 20, style: .continuous))
+```
+
+These can be animated!
+
+
+
 ## Basic Elements
 
 - A `Spacer()` will take up the remaining space between two elements (lets you push two elements away from each other). Children of stacks take up the minimum size of the element.
@@ -87,27 +101,25 @@ Stacks can be modified: `VStack(spacing: 20) {}` or `ZStack(alignment: .topLeadi
 - `Stepper()`
 - `Slider()`
 
-Icons can be imported from [SF Symbols](https://developer.apple.com/design/human-interface-guidelines/sf-symbols/overview/):
 
-```swift
-Image(systemName: item.icon)
-    .imageScale(.large)
-    .foregroundColor(.blue)
-    .frame(width: 32, height: 32)
-```
 
 ### Text Modifiers
 
 - `.font(.subheadline)`
+- `.font(.system(size: 20, weight: .bold, design: .default)` to customize (`.default` is SF Pro)
 - `.fontWeight(.bold)`
 - `.lineSpacing(4)`
 - `.multilineTextAlignment(.center)` for centering text
+
+
 
 ## Components
 
 Extract stacks to their own components with `Cmd + Click` > `Extract Subview`
 
 Modifiers can be added to instances of a component.
+
+
 
 ## Effects
 
@@ -116,9 +128,153 @@ Modifiers can be added to instances of a component.
 - `.rotation3DEffect(Angle(degrees: 10), axis: (x: 10, y: 0, z: 0))` for a perspective transform.
 - `.blendMode(.hardLight || .softLight || .overlay)`
 
+
+
 ## State
 
+### Initialize State
 
+`@State var show = false`
+
+### Set State
+
+```swift
+.onTapGesture {
+    self.show.toggle()
+}
+```
+
+### Use State
+
+```swift
+BackCardView()
+	.rotationEffect(Angle(degrees: show ? 0 : 5))
+```
+
+
+
+## Gestures
+
+- `onTapGesture`
+
+- ```swift
+  .gesture(
+  		DragGesture().onChanged { value in
+  				self.viewState = value.translation
+      }
+    	.onEnded { value in
+          self.viewState = .zero
+      }
+  )
+  ```
+
+
+
+Gestures can have multiple events like `onChanged` and `onEnded`. The events return values that can be translated to `CGSize`.
+
+## Animations
+
+`.animation(.easeInOut(duration: 0.3))`
+
+### Transition Options
+
+In additional to normal timing options, there is a `.default` timing option that is similar to `.easeInOut`
+
+Physics-based option: `animation(.spring(response: 0.3, dampingFraction: 0.6, blendDuration: 0))`
+
+- The lower the  `.response`, the quicker the animation
+- The `dampingFraction` regards the amount of bounce
+- The `blendDuration` regards animation queuing???
+
+### Custom Animations
+
+You can use a preset animation, or customize a preset by pulling in an `Animation` type first:
+
+```swift
+.animation(
+		Animation
+  		.default
+  		.delay(0.1)
+  		// Twice as fast as before
+		  // .speed(2)
+)
+```
+
+#### Animation Modifiers
+
+- `.timingCurve(0.2, 0.8, 0.2, 1, duration: 0.8)` for cubic-bezier
+- `.repeatCount(3, autoreverses: false)`
+- `.repeatForever()`
+
+
+
+### Animation States
+
+You may often store animation states as a `CGSize` type. For example, `@State var viewState = CGsize.zero`. This type stores an `x` and a `y` position as `width` and `height`. Use it to store the current location of your drag gesture.
+
+
+
+## Conditionals
+
+```swift
+if (self.bottomState.height < -100 && !self.showFull) || (self.bottomState.height < -250 && self.showFull) {
+    self.showFull = true
+}
+```
+
+
+
+## Debugging
+
+Instead of using logs, log value directly to a Text element: `Text("\(bottomState.height)").offset(y: -300)`
+
+
+
+## Adding New Screens
+
+To create a new screen, right click on `ContentView.swift` and selected `New File`. Select `SwiftUI` and name it.
+
+
+
+## Using SF Symbols
+
+Download the [SF Symbols app](https://developer.apple.com/design/). It has over 1000 icons. All you need is the name of the icon. You can style it like Text.
+
+```Swift
+Image(systemName: "gear")
+		.font(.system(size: 20, weight: .light))
+		.imageScale(.large)
+		.frame(width: 32, height: 32)
+```
+
+
+
+## Components with Props
+
+### Component
+
+```
+RowWithIcon(icon: "gear")
+```
+
+
+
+### Using the Component
+
+Type the props on top:
+
+```swift
+struct RowWithIcon: View {
+    var icon: String
+
+    var body: some View {
+        HStack {
+            Image(systemName: icon)
+							...
+
+```
+
+You can set default values: `var icon = "gear"`
 
 ## Additional Resources
 
