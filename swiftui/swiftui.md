@@ -67,10 +67,12 @@ Stacks can be modified: `VStack(spacing: 20) {}` or `ZStack(alignment: .topLeadi
 ### Layout Modifiers
 
 - A `.frame(width: Number, height: Number, alignment?: modifier)` modifier added to a stack lets you specify a maximum fixed size of the stack.
-- `.frame(maxWidth: .infinity)` forces a stack to take max width instead of using a Spacer
+- `.frame(maxWidth: .infinity)` forces an element/stack to take max width instead of using a Spacer
 - A `.resizable()` modifier added to an image resizes it for a frame. Add `.aspectRatio(contentMode: .fill)` to preserve aspect ratio. Add another frame to constrain it inside a frame.
 - `.cornerRadius(20)` adds a corner radius that clips content
 - `.shadow(radius: 20)`
+- `.shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)` customized shadow
+  - For a realistic shadow of a bright color: `.shadow(color: Color("foregroundColor").opacity(0.3), radius: 20, x: 0, y: 20)`
 - `.padding()` adds a default padding (16). Or can be modified: `.padding(.horizontal: 20)`
 - `.background(Color.black)` 
 - `.foregroundColor(Color("accent"))`
@@ -110,6 +112,7 @@ These can be animated!
 - `.fontWeight(.bold)`
 - `.lineSpacing(4)`
 - `.multilineTextAlignment(.center)` for centering text
+- `.uppercased()`
 
 
 
@@ -167,8 +170,6 @@ BackCardView()
       }
   )
   ```
-
-
 
 Gestures can have multiple events like `onChanged` and `onEnded`. The events return values that can be translated to `CGSize`.
 
@@ -275,6 +276,216 @@ struct RowWithIcon: View {
 ```
 
 You can set default values: `var icon = "gear"`
+
+
+
+## Color Literals & Gradients
+
+Backgrounds don't have the be Colors (`.background(Color.white)`). They can be Views as well (which include gradients or a `Color.color`).
+
+```swift
+.background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .top, endPoint: .bottom))
+```
+
+The `Color.red` can be replaced with `Color(Color Literal)` to allow you to input a hex code or pick from a color picker (double click on the literal)
+
+
+
+## Overlays
+
+To add an overlay after a `.clipShape`:
+
+```swift
+.overlay(
+  Image("Avatar")
+  .resizable()
+  .aspectRatio(contentMode: .fill)
+  .frame(width: 60, height: 60)
+  .clipShape(Circle())
+  .offset(y: -150)
+)
+```
+
+
+
+## Buttons
+
+```swift
+Button(action: {}) {
+	Text("Button")
+}
+```
+
+- By default, it will have Text inside.
+
+- A button has default behavior, such as tap animation. All content within the button will be tinted automatically.
+- You can use an Image instead of Text, however you need to remove the tint with `.renderingMode(.original)`
+- In the action, you can toggle states `(action: { self.showProfile.toggle() })`
+
+
+
+## Animation Between Screens (Simple)
+
+If you need to show another screen, there's no need to import it. Just add in the view.
+
+`.edgeIgnoringSafeArea(.all)` should be added to whichever views you wish to ignore the safe area. Don't add it to a parent of many views. Some views need the safe area.
+
+If you need to pad away from top, 44 is the size of the status bar. Make sure it's adaptive per device.
+
+For lightweight screens, you can change screens using state and a button toggle for example.
+
+
+
+To add gestures above a smaller element of the screen, add a background with a .001 opacity. A zero opacity will prevent you from interacting with it.
+
+![Example](https://juliette-images.s3.us-east-2.amazonaws.com/public/swift001.png)
+
+
+
+## Binding States
+
+If you create a new component that uses outside state, you need to bind that state to the component.
+
+```swift
+// Parent
+struct Home: View {
+	@State var showProfile = false
+	
+	var body: some View {
+    // 2. Pass the state (a binding) and add a $
+		AvatarView(showProfile: $showProfile)
+	}
+}
+
+// Child
+struct AvatarView: View {
+  // 1. Declare a binding instead of a state
+	@Binding var showProfile: Bool
+	
+	var body: some View {
+		Button(action: { self.showProfile.toggle }) {
+			...
+		}
+	}
+}
+```
+
+
+
+If you need to bind to a file with a preview, you need to specify default settings:
+
+```swift
+struct HomeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HomeView(showProfile: .constant(false))
+    }
+}
+```
+
+
+
+## Detecting Screen Size
+
+Declare `let screen = UIScreen.main.bounds` anywhere in the app. 
+
+To use it: `.offset(y: showProfile ? 0 : screen.height)`
+
+
+
+## Looping
+
+`Cmd + Click` on your view and select `Repeat`. It will create 5 copies of the same element:
+
+```
+ForEach(0 ..< 5) { item in
+	SectionView()
+}
+```
+
+
+
+## ScrollView
+
+Lets you set a frame that you can scroll. Everything depends on the content.
+
+```
+ScrollView {
+	ForEach(0 ..< 5) { item in
+		SectionView()
+	}
+}
+```
+
+For a horizontal ScrollView: `ScrollView(.horizontal)`. You may need to embed the content in an HStack.
+
+To remove scrollbar: `ScrollView(showsIndicators: false)`
+
+
+
+## Working with Data
+
+### Data Models
+
+You can add a data model to any file. 
+
+`UUID()` can help you create a unique id.
+
+```swift
+struct Section: Identifiable {
+    var id = UUID()
+    var title: String
+    var text: String
+    var logo: String
+    var image: Image
+    var color: Color
+}
+```
+
+
+
+### Array of Data
+
+You can skip autogenerated data like the id:
+
+```swift
+let sectionData = [
+    Section(title: "Prototype Designs in SwiftUI", text: "18 Sections", logo: "Logo1", image: Image("Card1"), color: Color("card1")),
+		...
+]
+
+```
+
+You can now loop through it:
+
+```swift
+ForEach(sectionData) { item in
+	SectionView(section: item)
+}
+```
+
+
+
+In the SectionView:
+
+```swift
+struct SectionView: View {
+  var section: Section
+  ...
+  Text(section.title)
+}
+```
+
+
+
+## Image Literals
+
+Pick your image straight from your code!
+
+`Image(uiImage: UIImage)`
+
+Replace `UIImage` with `Image Literal`
+
+
 
 ## Additional Resources
 
