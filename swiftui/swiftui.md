@@ -67,17 +67,36 @@ Stacks can be modified: `VStack(spacing: 20) {}` or `ZStack(alignment: .topLeadi
 ### Layout Modifiers
 
 - A `.frame(width: Number, height: Number, alignment?: modifier)` modifier added to a stack lets you specify a maximum fixed size of the stack.
+
 - `.frame(maxWidth: .infinity)` forces an element/stack to take max width instead of using a Spacer
+
 - A `.resizable()` modifier added to an image resizes it for a frame. Add `.aspectRatio(contentMode: .fill)` to preserve aspect ratio. Add another frame to constrain it inside a frame.
+
 - `.cornerRadius(20)` adds a corner radius that clips content
+
 - `.shadow(radius: 20)`
+
 - `.shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)` customized shadow
+
   - For a realistic shadow of a bright color: `.shadow(color: Color("foregroundColor").opacity(0.3), radius: 20, x: 0, y: 20)`
+
+  - For a two-source-of-light shadow (double drop shadow, one is sharp, one is more blurred):
+
+    - ```swift
+      .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+      .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 10)
+      ```
+
 - `.padding()` adds a default padding (16). Or can be modified: `.padding(.horizontal: 20)`
+
 - `.background(Color.black)` 
+
 - `.foregroundColor(Color("accent"))`
+
 - `.offset(x: Number, y: Number)` for moving elements away from center.
+
 - `.opacity(0.1)`
+
 - `.blur(radius: 20)` for directing focus (very perfomant on iOS)
 
 ### Smooth Corners
@@ -484,6 +503,88 @@ Pick your image straight from your code!
 `Image(uiImage: UIImage)`
 
 Replace `UIImage` with `Image Literal`
+
+
+
+## 3D Transformations
+
+The `GeometryReader` detects the size and position of your views. You'll need to add a frame with the size of your content.
+
+```swift
+ForEach(sectionData) { item in
+	GeometryReader { geometry in
+		SectionView(section: item)
+	}
+	.frame(width: 275, height: 275)
+}
+```
+
+You now have access to the width, height, top left position, top right postion, etc.. of the view
+
+
+
+To add a 3D rotation to the view:
+
+```swift
+SectionView(section: item)
+	.rotation3DEffect(Angle(degrees:
+		Double(geometry.frame(in:
+			.global).minX - 30) / -20
+	), axis: (x: 0, y: 10, z: 0))
+```
+
+This takes the frame value of the view and looks at the left postion (minX). These are CGFloats, so they'll need to be converted to a Double. The effect is damped by dividing it by 20. The effect only happens on the y-axis. Negating the 20 moves it to the opposite angle. 30 is subtracted to remove the original offset.
+
+
+
+## Sheet Modals
+
+Adds a sheet modal. When binding is true, the view is rendered within a sheet, that comes with gestures and animations. Use it for quick information.
+
+You don't need a NavigationView and you don't need to add a dismiss interaction (user already understands the swipe dismiss gesture). Remove any gestures in the view to prevent gesture conflict.
+
+```swift
+.sheet(isPresented: $showUpdate) {
+	ContentView()
+}
+```
+
+
+
+## Navigation View
+
+A `NavigationView` comes with a back button, animation, and gestures to go back for each `NavigationLink`
+
+```swift
+NavigationView {
+	NavigationLink(destination: Text("1")) {
+		Text("SwiftUI")
+	}
+}
+```
+
+This can be embedded in a List and given a title (`.navigationBarTitle`)
+
+<img src="https://juliette-images.s3.us-east-2.amazonaws.com/public/swift002.png" alt="Example" style="zoom:50%;" />
+
+
+
+```swift
+NavigationView {
+	List(updateData) { update in
+		NavigationLink(destination: Text(update.text)) {
+			Text(update.title)
+		}
+	}
+	.navigationBarTitle(Text("Updates"))
+}
+```
+
+NavigationViews are very customizable:
+
+<img src="https://juliette-images.s3.us-east-2.amazonaws.com/public/swift003.png" alt="Example" style="zoom:33%;" />
+
+
 
 
 
