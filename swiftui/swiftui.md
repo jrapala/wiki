@@ -551,9 +551,26 @@ You don't need a NavigationView and you don't need to add a dismiss interaction 
 
 
 
+## Lists
+
+A List comes with a few style options: `DefaultListStyle()` or `GroupidListStyle()` (content is white, background is off-white)
+
+```swift
+List {
+	VStack {
+		Image(update.image)
+		Text(update.text)
+	}
+	.navigationBarTitle(update.title)
+}
+.listStyle(GroupedListStyle())
+```
+
+
+
 ## Navigation View
 
-A `NavigationView` comes with a back button, animation, and gestures to go back for each `NavigationLink`
+A `NavigationView` comes with a back button, animation, and gestures to go back for each `NavigationLink`. There are also advanced interaction such as swipe to delete and edit mode.
 
 ```swift
 NavigationView {
@@ -583,6 +600,149 @@ NavigationView {
 NavigationViews are very customizable:
 
 <img src="https://juliette-images.s3.us-east-2.amazonaws.com/public/swift003.png" alt="Example" style="zoom:33%;" />
+
+
+
+### Using Views in Navigator
+
+1. Create a new view with a default value for the view
+
+   ```swift
+   struct UpdateDetail: View {
+       var update: Update = updateData[0]
+   
+       var body: some View {
+   			...
+   ```
+
+2. Pass in the value into the new view:
+
+   ```swift
+   List(updateData) { update in
+   	NavigationLink(destination: UpdateDetail(update: update)) {
+     	...
+   ```
+
+3. Use the value
+
+   ```swift
+   struct UpdateDetail: View {
+       var update: Update = updateData[0]
+   
+       var body: some View {
+           List {
+               VStack {
+                   Image(update.image)
+                       .resizable()
+                       .aspectRatio(contentMode: .fit)
+                       .frame(maxWidth: .infinity)
+                   Text(update.text)
+                       .frame(maxWidth: .infinity, alignment: .leading)
+               }
+               .navigationBarTitle(update.title)
+           }
+           .listStyle(PlainListStyle())
+       }
+   }
+   ```
+
+   
+
+### Navigation Buttons
+
+Added to List:
+
+```
+.navigationBarItems(leading: Button(action: addUpdate) {
+	Text("Button")
+})
+```
+
+
+
+## Using Data Stores
+
+### Create a Store
+
+1. Create a new file with an ObservableObject. The `@Published` ensures that the data is constantly updated.
+
+   ```swift
+   import SwiftUI
+   import Combine
+   
+   class UpdateStore: ObservableObject {
+       @Published var updates: [Update] = updateData
+   }
+   
+   ```
+
+   `updates` is an array of the previously declared `Update` data type. It is set to a previously declared array of data called `updateData`
+
+2. Use the store in a view.
+
+   ```swift
+   struct UpdateList: View {
+       @ObservedObject var store = UpdateStore()
+   
+       var body: some View {
+           NavigationView {
+               List(store.updates) { update in
+   							...
+   }
+   ```
+
+   
+
+### Adding to Store
+
+1. Add a function:
+
+   ```swift
+   func addUpdate() {
+   	store.updates.append(Update(image: "Card1", title: "New Item", text: "Text", date: "Jan 	1"))
+   }
+   ```
+
+   
+
+2. Use the function on a button:
+
+   ```
+   .navigationBarItems(leading: Button(action: addUpdate) {
+   	Text("Add")
+   })
+   ```
+
+
+
+### Deleting an Item
+
+Needs to be used in a `ForEach`. There is a modifier that can be added to the `ForEach`:
+
+```swift
+.onDelete { index in
+  // ! means the value is not optional
+	self.store.updates.remove(at: index.first!)
+}
+```
+
+
+
+### Editing an Item
+
+An `EditButton()` can be added to the `.navigationBarItems` with built in edit functionality:
+
+<img src="https://juliette-images.s3.us-east-2.amazonaws.com/public/swift004.png" alt="Example" style="zoom:50%;" />
+
+Add a `.onMove` modifier to your navigation list items to enable reordering:
+
+```swift
+.onMove { (source: IndexSet, destination: Int) in
+	self.store.updates.move(fromOffsets: source, toOffset: destination)
+}
+```
+
+
 
 
 
