@@ -1,5 +1,7 @@
 # SwiftUI
 
+[TOC]
+
 ## About SwiftUI
 
 Works for iPad, Mac, Apple TV, iPhone and Watch. Elements render appropriatly for their device (e.g. a Picker on Mac vs iOS).
@@ -99,6 +101,19 @@ Stacks can be modified: `VStack(spacing: 20) {}` or `ZStack(alignment: .topLeadi
 
 - `.blur(radius: 20)` for directing focus (very perfomant on iOS)
 
+- `.stroke(content style: StrokeStyle(lineWidth: CGFloat, lineCap: CGLineCap, lineJoin: CGLineJoin, miterLimit: CGFloat, dash: CGFloat, dashPhase: CGFloat))`
+
+  - lineWidth: width of line
+  - lineCap: only visible if gap between a dash or if trimmed
+  - lineJoin:
+  - miterLimit:
+  - dash:
+  - dashPhase:
+
+- `.trim(from: 0.2, to: 1)`: lets you trim, for example, a Circle() (only 80% visible)
+
+  
+
 ### Smooth Corners
 
 The `.cornerRadius()` modifier clips content. Use `.clipShape()` to preserve content:
@@ -117,6 +132,7 @@ These can be animated!
 - `Image("ImageName")`
 - `Text("Hello World")`
 - `Rectangle()`
+- `Circle()`
 - `Toggle()`
 - `Picker()`
 - `Stepper()`
@@ -132,6 +148,8 @@ These can be animated!
 - `.lineSpacing(4)`
 - `.multilineTextAlignment(.center)` for centering text
 - `.uppercased()`
+
+
 
 
 
@@ -196,6 +214,10 @@ Gestures can have multiple events like `onChanged` and `onEnded`. The events ret
 
 `.animation(.easeInOut(duration: 0.3))`
 
+`.animation(Animation.easeInOut.delay(0.3))`
+
+Note, an animation at the child level takes precedence over an animation set at the parent level.
+
 ### Transition Options
 
 In additional to normal timing options, there is a `.default` timing option that is similar to `.easeInOut`
@@ -239,6 +261,16 @@ You may often store animation states as a `CGSize` type. For example, `@State va
 ```swift
 if (self.bottomState.height < -100 && !self.showFull) || (self.bottomState.height < -250 && self.showFull) {
     self.showFull = true
+}
+```
+
+
+
+To load a certain view:
+
+```swift
+if showContent {
+	ContentView()
 }
 ```
 
@@ -415,7 +447,7 @@ To use it: `.offset(y: showProfile ? 0 : screen.height)`
 
 `Cmd + Click` on your view and select `Repeat`. It will create 5 copies of the same element:
 
-```
+```swift
 ForEach(0 ..< 5) { item in
 	SectionView()
 }
@@ -743,6 +775,149 @@ Add a `.onMove` modifier to your navigation list items to enable reordering:
 ```
 
 
+
+## Tab Bar
+
+Bottom navigation. The best way to access other views. 
+
+<img src="https://juliette-images.s3.us-east-2.amazonaws.com/public/swift005.png" alt="Example" style="zoom:50%;" />
+
+```swift
+struct TabBar: View {
+    var body: some View {
+        TabView {
+            Home().tabItem {
+                Image(systemName: "play.circle.fill")
+                Text("Home")
+            }
+            ContentView().tabItem {
+                Image(systemName: "rectangle.stack.fill")
+                Text("Certificates")
+            }
+        }
+    }
+}
+```
+
+
+
+## Testing
+
+### Setting Inital Screen
+
+In `SceneDelegate.swift`, assign `contentView` to the first screen (e.g. `TabBar()`)
+
+
+
+### Quick Preview
+
+To quickly preview on a specific device:
+
+```swift
+struct TabBar_Previews: PreviewProvider {
+    static var previews: some View {
+        TabBar().previewDevice("iPhone 8")
+    }
+}
+
+```
+
+
+
+To preview on multiple devices (will not work with live preview):
+
+```swift
+struct TabBar_Previews: PreviewProvider {
+    static var previews: some View {
+        Group {
+            TabBar().previewDevice("iPhone 8")
+            TabBar().previewDevice("iPhone Xs")
+        }
+    }
+}
+```
+
+
+
+Option + Click on `.previewDevice` to show all of your options.
+
+
+
+### Testing on a Device
+
+You may need to allow the device to be installed.
+
+On your device: Go to `Settings > General > Profiles or Settings > General > Device Management`, trust the developer and allow the apps to be run.
+
+
+
+## Variables within Components
+
+If you have a variable that will not change, it needs to change to let and live within the view. The implicit return will need to replaced.
+
+```swift
+struct RingView: View {
+    var width: CGFloat = 88
+
+    var body: some View {
+        let multiplier = width / 44
+        
+        return ZStack {
+```
+
+
+
+## Custom Modifiers
+
+Create a `Modifiers.swift` file:
+
+```swift
+import SwiftUI
+
+struct ShadowModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .shadow(color: Color.black.opacity(0.2), radius: 20, x: 0, y: 20)
+            .shadow(color: Color.black.opacity(0.1), radius: 1, x: 0, y: 1)
+    }
+}
+
+```
+
+Use the modifier:
+
+```swift
+.modifier(ShadowModifier())
+```
+
+
+
+If you add a modifier to a VStack or HStack, it will apply to all of the children.
+
+
+
+### Passing in Styles to a Modifier:
+
+```swift
+struct FontModifier: ViewModifier {
+    var style: Font.TextStyle = .body
+
+    func body(content: Content) -> some View {
+        content
+            .font(.system(style, design: .rounded))
+    }
+}
+
+// Text("6 minutes left").bold().modifier(FontModifier(style: .subheadline))
+```
+
+
+
+## Custom Fonts
+
+1. Download fonts (e.g. from Google Fonts)
+2. Add to Project > App Name directory. Make sure `Copy items if needed`, `Create groups`, and `Add to  targets` are selected.
+3. In `Info.plist`, add a`Fonts provided by application` property. For each item, name the file (e.g. `WorkSans-Regular.ttf`)
 
 
 

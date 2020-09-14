@@ -261,8 +261,6 @@ invokeSoon(() => sendMessage.apply(c, ["phone"]), 500);
 
 
 
-
-
 ## Type Systems
 
 TypeScript is a **structural type system**. It only cares about the **shape** of an object. Languages like Java are **nominal type systems**. The care if an argument is an instance of a class/type of a specific name (works in OOP)
@@ -276,4 +274,82 @@ Wide --> Narrow
 `any` -> `any[]` -> `string[]` -> `[string, string, string]` ->`["abc", "abc", string]` -> `never`
 
 .
+
+## Interface vs. Type Alias
+
+### Type Alias
+
+A type alias allows us to give a type a name. They must exist in the space they are being used.
+
+```typescript
+type StringOrNumber = string | number;
+
+type HasName = { name: string };
+```
+
+
+
+Types can be self-referencing:
+
+```typescript
+type NumVal = 1 | 2 | 3 | NumVal[];
+```
+
+
+
+### Interface
+
+The Interface is limited to Javascript objects and its subtypes (arrays and functions).
+
+
+
+Interfaces can extend from other interfaces.
+
+```typescript
+export interface HasInternationalPhoneNumber extends HasPhoneNumber {
+	countryCode: string;
+}
+```
+
+
+
+A interface can be used to describe a function:
+
+```typescript
+interface ContactMessenger1 {
+	(contact: HasEmail | HasPhoneNumber, message: string): void;
+}
+```
+
+
+
+Here's a type version:
+
+```typescript
+type ContactMessenger2 = (
+	contact: HasEmail | HasPhoneNumber,
+  message: string
+) => void;
+```
+
+
+
+## Contextual Inference
+
+```typescript
+// // NOTE: we don't need type annotations for contact or message
+const emailer: ContactMessenger1 = (_contact, _message) => {
+  /** ... */
+};
+```
+
+
+
+## Contruct Signatures
+
+```typescript
+interface ContactConstructor {
+ 	new (...args: any[]): HasEmail | HasPhoneNumber;
+}
+```
 
