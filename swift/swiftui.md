@@ -12,6 +12,10 @@ Using provided font sizes scales text automatically to fit device / accessibilit
 
 Unlike developing for web, when developing with SwiftUI, you start with content first, and then build a parent container around it.
 
+It utilizes **declarative user interface design**. This means we say *what* we want rather than say *how* it should be done. If we want a Picker with some values inside, it is down to SwiftUI to decide whether it should be a wheel picker or the sliding view.
+
+
+
 ## Getting Started
 
 1. New XCode Project
@@ -19,6 +23,60 @@ Unlike developing for web, when developing with SwiftUI, you start with content 
 3. In project options, the Organization Identifier is usually your domain in reverse (e.g. com.google). The language should be Swift and the User Interface should be SwiftUI.
 4. Import app icons, colors (light and dark appearances), etc.. into your `Assets.xcassets` directory. SVG assets should be in a PDF format. You'll only need a 1x version for PDFs.
 5. Start writing code in `ContentView.swift`
+
+
+
+## Structure of a SwiftUI App
+
+For a new project, in the **Project Navigator**, you will see these files:
+
+- `AppDelegate.swift` contains code for managing your app. It used to be common to add code here, but now it's rare.
+- `SceneDelegate.swift` contains code for launching one window in your app. Useful for iPad where you can have multiple instances of your app open at the same time.
+- `ContentView.swift` contains the initial UI for your app
+- `Assets.xcassets` is an asset catalog--a collection of images, colors, icons, iMessage stickers, etc..
+- `LaunchScreen.storyboard` is a visual editor for creating a small piece of UI when your app is launching
+- `Info.plist` is a collection of values that describe to the system how your app works (version, supported device orientations, etc..)
+- `Preview Content` is a group with `Preview Assets.xcassets` inside. This is another asset catalog for example images you may want to use when you're designing your UI.
+
+
+
+## ContentView.swift Boilerplate
+
+```swift
+// Import all of the functionality in the SwiftUI framework
+import SwiftUI
+
+// ContentView is a struct that conform to the View protocol. 
+// View comes from SwiftUI - it is the basic protocol that must be adopted
+// by anything you want to draw on the screen.
+struct ContentView: View {
+  	// A property called body that has a 'some View' type--an opaque result type.
+  	// It conforms to the View protocol, but 'some' ensures that one specific
+  	// sort of view must be sent back from this property.
+  	//
+  	// The view protocol has only one requirement - it must have a computed property
+  	// called body that returns some View (and only one View).
+    var body: some View {
+      	// Creates a text view with the string "Hello World"
+        Text("Hello World")
+    }
+}
+
+// A struct that conforms to the PreviewProvider protocol.
+// Won't be part of your final app. It's for Xcode to use so it can show 
+// a preview of your UI in the canvas.
+// 
+// Canvas only works on Catalina. Otherwise, use a simulator.
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        ContentView()
+    }
+}
+```
+
+
+
+
 
 ## Development
 
@@ -32,7 +90,9 @@ You can drag and drop assets directly into the Preview.
 
 You can Pin the Preview so you'll always see the same screen as you make code changes.
 
-`Ctrl + I` cleans up code.
+Swift limits 10 children inside a parent. If you need to add more you need to wrap in a `Group {}`
+
+
 
 ### Keyboard Shortcuts
 
@@ -42,6 +102,10 @@ You can Pin the Preview so you'll always see the same screen as you make code ch
 - `Cmd + Shift + L`: Insert new element.
 - `Cmd + R`: Run the app.
 - `Cmd + . `: Stop the app.
+- `Option + Cmd + P`: Resume the app
+- `Ctrl + I`: Clean up code
+
+
 
 ### Dark Mode
 
@@ -58,6 +122,10 @@ All elements are centered by default.
 
 SwiftUI has very good default values.
 
+When you create a `View`, remember that **nothing is behind it.** If you want something behind it, you must use `.frame(maxWidth: .infinity, maxHeight: .infinity)`.
+
+
+
 ### Types of Stacks
 
 - `VStack` Vertical Stack
@@ -66,7 +134,19 @@ SwiftUI has very good default values.
 
 Stacks can be modified: `VStack(spacing: 20) {}` or `ZStack(alignment: .topLeading) {}`
 
+
+
 ### Layout Modifiers
+
+Modifiers create new structs with that modifier applied, rather than just setting a property on the view. 
+
+So, order matters.
+
+
+
+Some modifiers are environmental instead of regular. You'll have to experiment to understand which modifier falls into which category.
+
+
 
 - A `.frame(width: Number, height: Number, alignment?: modifier)` modifier added to a stack lets you specify a maximum fixed size of the stack.
 
@@ -126,17 +206,100 @@ These can be animated!
 
 
 
+### Conditional Modifiers
+
+```swift
+struct ContentView: View {
+    @State private var useRedText = false
+
+    var body: some View {
+        Button("Hello World") {
+            // flip the Boolean between true and false
+            self.useRedText.toggle()            
+        }
+        .foregroundColor(useRedText ? .red : .blue)
+    }
+}
+```
+
+
+
 ## Basic Elements
 
 - A `Spacer()` will take up the remaining space between two elements (lets you push two elements away from each other). Children of stacks take up the minimum size of the element.
+
 - `Image("ImageName")`
+
+  - `Image(decorative: "pencil")` to remove screen reader callout
+  - `Image(systemName: "pencil")` to use SF Symbol icon
+
 - `Text("Hello World")`
+
+  - You can set specifiers to prevent long Doubles:
+
+    ```swift
+    // two decimal places
+    Text("$\(totalPerPerson, specifier: "%.2f")")
+    ```
+
+    ```swift
+    // discard insignificant zeroes
+    Text("\(sleepAmount, specifier: "%g") hours")
+    ```
+
+- `TextField("Amount", text: $checkAmount)`
+  
+  - You can modify the keyboard with `.keyboardType(.decimalPad)`. Note, it doesn't change the type of content allowed.
+  
 - `Rectangle()`
+
 - `Circle()`
+
 - `Toggle()`
+
 - `Picker()`
+  
+  - A segmented picker can be created with the `.pickerStyle(SegmentedPickerStyle())` modifier.![](https://juliette-images.s3.us-east-2.amazonaws.com/public/swift006.png)
+  
 - `Stepper()`
+
+  - ```swift
+    // You can set a range and a step in a Stepper
+    Stepper(value: $sleepAmount, in: 4...12, step: 0.25) {
+        Text("\(sleepAmount) hours")
+    }
+    ```
+
 - `Slider()`
+
+- `Form { }`
+  
+  - Note, adding elements inside a form changes how they would normally look
+  
+- `Section { }` to create sections
+  
+  - Accepts a header, e.g. `Section(header: Text("Title") {`
+  
+- `Alert(title: Text("Hello SwiftUI!"), message: Text("This is some detail message"), dismissButton: .default(Text("OK"))))`
+
+- `DatePicker()`
+
+  ```swift
+  @State private var wakeUp = Date()
+  
+  var body: some View {
+  	  //	This "in" range is for any dates in the future
+      DatePicker("Please enter a date", selection: $wakeUp, displayedComponents: .hourAndMinute, in: Date()...)
+    		// optional modifier to hide the label -- still read by VoiceOver
+    		.labelsHidden()
+  }
+  ```
+
+  - The look of a `DatePicker` can be changed by nesting it in a `Form`
+
+
+
+Some of these are **primitive views**,  which conform to a view but return fixed content instead of rendering another view. Examples: Text, Image, Color, Spacer
 
 
 
@@ -151,13 +314,11 @@ These can be animated!
 
 
 
-
-
 ## Components
 
 Extract stacks to their own components with `Cmd + Click` > `Extract Subview`
 
-Modifiers can be added to instances of a component.
+**Modifiers** can be added to instances of a component. A modifier is a method that returns a new instance of whatever you use them on.
 
 
 
@@ -174,7 +335,21 @@ Modifiers can be added to instances of a component.
 
 ### Initialize State
 
-`@State var show = false`
+Since `ContentView` is a struct, it is *immutable*. When creating struct methods that want to change properties. However, Swift doesn’t let us make mutating computed properties, which means we can’t write `mutating var body: some View`.
+
+To overcome this, Swift gives us a **property wrapper**: a special attribute we can place before our properties to change their functionality. `@State` is one such property wrapper. The value will now be stored in a place where is *can* be changed.
+
+
+
+### Create State
+
+```swift
+@State var show = false
+```
+
+**Note:** Apple recommends we add `private` access control to those properties, like this: `@State private var tapCount = 0`.
+
+
 
 ### Set State
 
@@ -183,6 +358,8 @@ Modifiers can be added to instances of a component.
     self.show.toggle()
 }
 ```
+
+
 
 ### Use State
 
@@ -208,15 +385,108 @@ BackCardView()
   )
   ```
 
-Gestures can have multiple events like `onChanged` and `onEnded`. The events return values that can be translated to `CGSize`.
+Gestures can have multiple events like `onChanged` and `onEnded`. The events return values that can be translated to `CGSize`. (CG stands for Core Graphics)
 
 ## Animations
 
-`.animation(.easeInOut(duration: 0.3))`
+### Implicit Animations
 
-`.animation(Animation.easeInOut.delay(0.3))`
+What is an implicit animation? It's telling a `View` you want to animate it, and this is how you should respond.
+
+```swift
+// animations need to use CGFloat (similar to a Double) due to backwards compatability
+@State private var animationAmount: CGFloat = 1
+
+Button("Tap Me") {
+  	// when tapped, increase scale by 1
+    self.animationAmount += 1
+}
+.padding(50)
+.background(Color.red)
+.foregroundColor(.white)
+.clipShape(Circle())
+.scaleEffect(animationAmount)
+// add the implicit animation -- it's a function of our state (we don't say when to start/stop it)
+.animation(.default)
+```
+
+
+
+You can also trigger the animation with the `.onAppear` modifier:
+
+```swift
+...
+.onAppear {
+    self.animationAmount = 2
+}
+```
+
+
+
+### Customizing Implicit Animations
+
+- `.animation(.easeInOut(duration: 0.3))`
+
+- `.animation(Animation.easeInOut.delay(0.3))`
+
+- `.animation(.interpolatingSpring(stiffness: 50, damping: 1))`:  (`stiffness` is initial velocity and `damping` is how fast (lower values = bounces for longer))
 
 Note, an animation at the child level takes precedence over an animation set at the parent level.
+
+
+
+### Animations in Two-Way Bindings
+
+Animations can be added to two-way bindings:
+
+```swift
+Stepper("Scale amount", value: $animationAmount.animation(
+	Animation.easeInOut(duration: 1)
+		.repeatCount(3, autoreverses: true)
+), in: 1...10)
+```
+
+Here, the view has no idea it will be animated, but it works.
+
+
+
+### Explicit Animations
+
+You can also ask SwiftUI to animate changes occurring as the result of a state change.
+
+```swift
+struct ContentView: View {
+  	// only a Double needed this time
+    @State private var animationAmount = 0.0
+    
+    var body: some View {
+        Button("Tap Me") {
+          	// being explicit that this state change will trigger an animation
+          	// use a withAnimation closure
+            withAnimation {
+                self.animationAmount += 360
+            }
+        }
+        .padding(50)
+        .background(Color.red)
+        .foregroundColor(.white)
+        .clipShape(Circle())
+        .rotation3DEffect(.degrees(animationAmount), axis: (x: 0, y: 1, z: 0))
+    }
+}
+```
+
+
+
+`withAnimation` can be given an animation parameter:
+
+```swift
+withAnimation(.interpolatingSpring(stiffness: 5, damping: 1)) {
+    self.animationAmount += 360
+}
+```
+
+
 
 ### Transition Options
 
@@ -227,6 +497,45 @@ Physics-based option: `animation(.spring(response: 0.3, dampingFraction: 0.6, bl
 - The lower the  `.response`, the quicker the animation
 - The `dampingFraction` regards the amount of bounce
 - The `blendDuration` regards animation queuing???
+
+
+
+There is also a `.transition` modifier:
+
+- `.transition(.scale)`
+
+- `.transition(.asymmetric(insertion: .scale, removal: .opacity))`
+
+
+
+### Custom Transitions
+
+[Link](https://www.hackingwithswift.com/books/ios-swiftui/building-custom-transitions-using-viewmodifier)
+
+```swift
+View
+	.transition(.pivot)
+
+struct CornerRotateModifier: ViewModifier {
+    let amount: Double
+    let anchor: UnitPoint
+
+    func body(content: Content) -> some View {
+        content.rotationEffect(.degrees(amount), anchor: anchor).clipped()
+    }
+}
+
+extension AnyTransition {
+    static var pivot: AnyTransition {
+        .modifier(
+            active: CornerRotateModifier(amount: -90, anchor: .topLeading),
+            identity: CornerRotateModifier(amount: 0, anchor: .topLeading)
+        )
+    }
+}
+```
+
+
 
 ### Custom Animations
 
@@ -253,6 +562,68 @@ You can use a preset animation, or customize a preset by pulling in an `Animatio
 ### Animation States
 
 You may often store animation states as a `CGSize` type. For example, `@State var viewState = CGsize.zero`. This type stores an `x` and a `y` position as `width` and `height`. Use it to store the current location of your drag gesture.
+
+
+
+### Stopping Animations
+
+If you don't want part of your stack animated, use `nil`:
+
+```swift
+Button("Tap Me") {
+    self.enabled.toggle()
+}
+.frame(width: 200, height: 200)
+.background(enabled ? Color.blue : Color.red)
+.animation(nil)
+.foregroundColor(.white)
+.clipShape(RoundedRectangle(cornerRadius: enabled ? 60 : 0))
+.animation(.interpolatingSpring(stiffness: 10, damping: 1))
+```
+
+
+
+### Animating Gestures
+
+```swift
+struct ContentView: View {
+    @State private var dragAmount = CGSize.zero
+    
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [.yellow, .red]), startPoint: .topLeading, endPoint: .bottomTrailing)
+            .frame(width: 300, height: 200)
+            .clipShape(RoundedRectangle(cornerRadius: 10))
+            .offset(dragAmount)
+            .gesture(
+                DragGesture()
+                    .onChanged { self.dragAmount = $0.translation }
+                    .onEnded { _ in self.dragAmount = .zero }
+            )
+    }
+}
+```
+
+
+
+## Alerts
+
+To show an alert:
+
+```swift
+struct ContentView: View {
+    @State private var showingAlert = false
+    
+    var body: some View {
+        Button("Show Alert") {
+            self.showingAlert = true
+        }
+      	// With two-way binding, the dismiss button will set this back to false
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Hello SwiftUI"), message: Text("This is some detail message"), dismissButton: .default(Text("OK")))
+        }
+    }
+}
+```
 
 
 
@@ -334,11 +705,33 @@ You can set default values: `var icon = "gear"`
 
 Backgrounds don't have the be Colors (`.background(Color.white)`). They can be Views as well (which include gradients or a `Color.color`).
 
+### Linear Gradient
+
 ```swift
 .background(LinearGradient(gradient: Gradient(colors: [Color.red, Color.blue]), startPoint: .top, endPoint: .bottom))
 ```
 
 The `Color.red` can be replaced with `Color(Color Literal)` to allow you to input a hex code or pick from a color picker (double click on the literal)
+
+
+
+Colors can also be written like this: `Color(red: 1, green: 1, blue: 0)`
+
+
+
+### Radial Gradient
+
+```swift
+RadialGradient(gradient: Gradient(colors: [.blue, .black]), center: .center, startRadius: 20, endRadius: 200)
+```
+
+
+
+### Conical or Angular Gradient
+
+```swift
+AngularGradient(gradient: Gradient(colors: [.red, .yellow, .green, .blue, .purple, .red]), center: .center)
+```
 
 
 
@@ -361,14 +754,31 @@ To add an overlay after a `.clipShape`:
 
 ## Buttons
 
+Two ways to create a button.
+
+First, is with a title and a closure:
+
 ```swift
-Button(action: {}) {
-	Text("Button")
+Button("Tap me!") {
+    print("Button was tapped")
 }
 ```
 
-- By default, it will have Text inside.
+Second, is by passing in the contents. Useful if there is an image in the button:
 
+```swift
+Button(action: {
+    print("Button was tapped")
+}) { 
+    Text("Tap me!")
+}
+```
+
+
+
+A button:
+
+- By default, it will have Text inside.
 - A button has default behavior, such as tap animation. All content within the button will be tinted automatically.
 - You can use an Image instead of Text, however you need to remove the tint with `.renderingMode(.original)`
 - In the action, you can toggle states `(action: { self.showProfile.toggle() })`
@@ -435,6 +845,103 @@ struct HomeView_Previews: PreviewProvider {
 
 
 
+## Two-Way Binding
+
+An example of **two-way binding** is binding a text field to show the value of a property, and also binding it so that any changes to the text field updates the property. We use a `$` to create two-way bindings.
+
+```swift
+struct ContentView: View {
+    @State private var name = ""
+
+    var body: some View {
+        Form {
+            TextField("Enter your name", text: $name)
+            Text("Hello World")
+        }
+    }
+}
+```
+
+
+
+## Custom Bindings
+
+You can specify different logic for the get and set property observors with custom bindings.
+
+
+
+Simple Example:
+
+```swift
+struct ContentView: View {
+    @State var selection = 0
+
+    var body: some View {
+        let binding = Binding(
+          	// A simple passthrough
+            get: { self.selection },
+            set: { self.selection = $0 }
+        )
+
+        return VStack {
+          	// No need to ask for a two-way binding since we are specifying that it is
+            Picker("Select a number", selection: binding) {
+                ForEach(0 ..< 3) {
+                    Text("Item \($0)")
+                }
+            }.pickerStyle(SegmentedPickerStyle())
+        }
+    }
+}
+```
+
+
+
+Advanced Example. Here switching `agreedToAll` will toggle the other toggles.
+
+```swift
+struct ContentView: View {
+    @State var agreedToTerms = false
+    @State var agreedToPrivacyPolicy = false
+    @State var agreedToEmails = false
+
+    var body: some View {
+        let agreedToAll = Binding<Bool>(
+            get: {
+                self.agreedToTerms && self.agreedToPrivacyPolicy && self.agreedToEmails
+            },
+            set: {
+                self.agreedToTerms = $0
+                self.agreedToPrivacyPolicy = $0
+                self.agreedToEmails = $0
+            }
+        )
+
+        return VStack {
+            Toggle(isOn: $agreedToTerms) {
+                Text("Agree to terms")
+            }
+
+            Toggle(isOn: $agreedToPrivacyPolicy) {
+                Text("Agree to privacy policy")
+            }
+
+            Toggle(isOn: $agreedToEmails) {
+                Text("Agree to receive shipping emails")
+            }
+
+            Toggle(isOn: agreedToAll) {
+                Text("Agree to all")
+            }
+        }
+    }
+}
+```
+
+
+
+
+
 ## Detecting Screen Size
 
 Declare `let screen = UIScreen.main.bounds` anywhere in the app. 
@@ -453,6 +960,22 @@ ForEach(0 ..< 5) { item in
 }
 ```
 
+When using a `ForEach`, you are no longer limited to 10 children.
+
+A `ForEach` is a `View` in itself, that returns other `Views`. 
+
+
+
+To loop over items of an array:
+
+```swift
+ForEach(agents, id: \.self) {
+	Text($0)
+}
+```
+
+This is needed to tell Swift that items are all unique.
+
 
 
 ## ScrollView
@@ -470,6 +993,8 @@ ScrollView {
 For a horizontal ScrollView: `ScrollView(.horizontal)`. You may need to embed the content in an HStack.
 
 To remove scrollbar: `ScrollView(showsIndicators: false)`
+
+**Note**: Be careful. When you add views to a ScrollView, they are immedietly created. 
 
 
 
@@ -565,7 +1090,7 @@ SectionView(section: item)
 	), axis: (x: 0, y: 10, z: 0))
 ```
 
-This takes the frame value of the view and looks at the left postion (minX). These are CGFloats, so they'll need to be converted to a Double. The effect is damped by dividing it by 20. The effect only happens on the y-axis. Negating the 20 moves it to the opposite angle. 30 is subtracted to remove the original offset.
+This takes the frame value of the view and looks at the left postion (minX). These are `CGFloats` (needed instead of `Double` for backwards compatibility), so they'll need to be converted to a Double. The effect is damped by dividing it by 20. The effect only happens on the y-axis. Negating the 20 moves it to the opposite angle. 30 is subtracted to remove the original offset.
 
 
 
@@ -600,6 +1125,46 @@ List {
 
 
 
+You can mix static and dynamic content:
+
+```swift
+List {
+    Text("Static row 1")
+    Text("Static row 2")
+
+    ForEach(0..<5) {
+        Text("Dynamic row \($0)")
+    }
+
+    Text("Static row 3")
+    Text("Static row 4")
+}
+```
+
+
+
+If you have nothing but dynamic content, you can do this:
+
+```swift
+// range
+List(0..<5) {
+    Text("Dynamic row \($0)")
+}
+
+// array
+struct ContentView: View {
+    let people = ["Finn", "Leia", "Luke", "Rey"]
+
+    var body: some View {
+        List(people, id: \.self) {
+            Text($0)
+        }
+    }
+}
+```
+
+
+
 ## Navigation View
 
 A `NavigationView` comes with a back button, animation, and gestures to go back for each `NavigationLink`. There are also advanced interaction such as swipe to delete and edit mode.
@@ -612,7 +1177,9 @@ NavigationView {
 }
 ```
 
-This can be embedded in a List and given a title (`.navigationBarTitle`)
+This can be embedded in a List and given a title (`.navigationBarTitle`). Note, this needs to be inside the `NavigationView`. The reason is that navigation views are capable of showing many views as your program runs, so by attaching the title to the thing *inside* the navigation view we’re allowing iOS to change titles freely.
+
+They also have different types of `displayMode`s. 
 
 <img src="https://juliette-images.s3.us-east-2.amazonaws.com/public/swift002.png" alt="Example" style="zoom:50%;" />
 
@@ -896,6 +1463,23 @@ If you add a modifier to a VStack or HStack, it will apply to all of the childre
 
 
 
+You can also create an extension on a View to use this modifier:
+
+```swift
+extension View {
+    func titleStyle() -> some View {
+        self.modifier(Title())
+    }
+}
+
+Text("Hello World")
+    .titleStyle()
+```
+
+
+
+
+
 ### Passing in Styles to a Modifier:
 
 ```swift
@@ -920,6 +1504,152 @@ struct FontModifier: ViewModifier {
 3. In `Info.plist`, add a`Fonts provided by application` property. For each item, name the file (e.g. `WorkSans-Regular.ttf`)
 
 
+
+## Dates
+
+### Simple Date
+
+Swift has a built-in type for handling dates.
+
+```swift
+let now = Date()
+let tomorrow = Date().addingTimeInterval(86400)
+let range = now ... tomorrow
+```
+
+
+
+### DateComponents
+
+Lets you write specific parts of a date:
+
+```swift
+var components = DateComponents()
+components.hour = 8
+components.minute = 0
+let date = Calendar.current.date(from: components) ?? Date()
+```
+
+
+
+Lets you get parts from a date:
+
+```swift
+let components = Calendar.current.dateComponents([.hour, .minute], from: someDate)
+let hour = components.hour ?? 0
+let minute = components.minute ?? 0
+```
+
+
+
+### DateFormatter
+
+To get the time from a date:
+
+```swift
+let formatter = DateFormatter()
+formatter.timeStyle = .short
+let dateString = formatter.string(from: Date())
+```
+
+
+
+
+
+## Core ML 
+
+All iPhones come with a machine learning tool called `Core ML`.
+
+1. `Xcode > Open Developer Tool > Create ML`
+2. `New Document`
+
+### Tabular Regressor
+
+1. Under `Data Inputs`, select `Choose` under the `Training Data` title.
+2. Choose a `csv` file to use
+3. Chose the `target` - the value we want the computer to learn to predict
+4. Select `features` to use for the training
+5. Choose the `algorithm`. Start with `Automatic`.
+   1. `Linear Regression` - The goal of a linear regression is to be able to draw one straight line through all your data points
+   2. `Decision Tree` - Similar to a game of 20 questions
+   3. `Boosted Tree` - A series of decision trees, each one correcting errors in the previous tree. First tree has 20% chance of guessing, next tree has 10%, etc..
+   4. `Random Forest` - A boosted tree, but only has access to a subset of data. Combine all the predicitions together to make an average.
+6. Press `Train`
+7. In `Evaluation` you'll see the `Root Mean Square Error` - this is the average error.
+8. In `Output` you'll see the size of your file.
+
+
+
+### Using Predicitons
+
+Always wrap in a `do {} try {}` since predictions may fail:
+
+```swift
+do {
+	let prediction = try model.prediction(wake: Double(hour + minute), estimatedSleep: sleepAmount, coffee: Double(coffeeAmount))
+	let sleepTime = wakeUp - prediction.actualSleep
+
+	let formatter = DateFormatter()
+	formatter.timeStyle = .short
+
+	alertMessage = formatter.string(from: sleepTime)
+	alertTitle = "Your ideal bedtime is..."
+} catch {
+	alertTitle = "Error"
+	alertMessage = "Sorry, there was a problem calculating your bedtime."
+}
+```
+
+
+
+## Adding Resources
+
+For non-image resources, you need to import then from the bundle:
+
+```swift
+if let fileURL = Bundle.main.url(forResource: "some-file", withExtension: "txt") {
+    // we found the file in our bundle!
+}
+
+// loading text file
+if let fileContents = try? String(contentsOf: fileURL) {
+    // we loaded the file into a string!
+}
+```
+
+
+
+## Strings
+
+### Turning a String into an Array
+
+```swift
+let input = "a b c"
+let letters = input.components(separatedBy: " ")
+```
+
+
+
+##  Checking for Misspelled Words
+
+```swift
+// 1. Create a word and an instance of UITextChecker()
+let word = "swift"
+let checker = UITextChecker()
+
+// 2. Tell Swift how much of the word you wish to check
+// UITextChecker is written with Objective-C. Objective-C does not handle emojis.
+// You need to create an Objective-C range instead.
+let range = NSRange(location: 0, length: word.utf16.count)
+
+// 3. Search for misspellings
+let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+
+// 4. Check for results
+// If the range is empty, Objective-C sends back NSNotFound (no concept of optionals)
+let allGood = misspelledRange.location == NSNotFound
+
+```
 
 
 

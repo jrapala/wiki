@@ -33,6 +33,10 @@ A large int can use underscores as separators (helps you read it)
 
 
 
+If a variable is set to a value, the type is inferred. In `var age = 25`, `age` is an `Int`.
+
+
+
 ### Multi-Line Strings
 
 Use backslashes to remove line breaks.
@@ -63,6 +67,10 @@ lines
 var score = 85
 var str = "Your score was \(score)"
 ```
+
+Swift is smart enough to handle different data types.
+
+You can write entire Swift expression within the parenthesis. 
 
 
 
@@ -101,11 +109,35 @@ let ringo = "Ringo Starr"
 
 let beatles = [john, paul, george, ringo]
 beatles[1]
+
+type(of: beatles) // Array<String>.Type
 ```
 
 **Note:** Swift will crash if it tries to read an item that does not exist.
 
 
+
+If you need a mixed Array:
+
+```swift
+var songs: [Any]
+```
+
+
+
+To create an empty Array:
+
+```swift
+var songs: [String] = []
+
+// or
+
+var songs = [String]()
+```
+
+
+
+To randomize the order of an array: `[].shuffled()`
 
 ### Sets
 
@@ -216,6 +248,45 @@ let result = Result.failure
 
 
 
+You can also access enums with a `.` shortcut, if an argument has an `enum` type:
+
+```swift
+enum WeatherType {
+    case sun
+    case cloud
+    case rain
+    case wind
+    case snow
+}
+
+func getHaterStatus(weather: WeatherType) -> String? {
+    if weather == .sun {
+        return nil
+    } else {
+        return "Hate"
+    }
+}
+
+getHaterStatus(weather: .cloud)
+```
+
+or:
+
+```swift
+func getHaterStatus(weather: WeatherType) -> String? {
+    switch weather {
+    case .sun:
+        return nil
+    case .cloud, .wind:
+        return "dislike"
+    case .rain:
+        return "hate"
+    }
+}
+```
+
+
+
 ### Enum associated values
 
 A way Swift allows you to attach more information to your enums. 
@@ -253,6 +324,27 @@ enum Weather {
     case thisIsSeriousNow
     case itsAHurricane
 }
+```
+
+
+
+Also lets you add extra conditions in switches:
+
+```swift
+func getHaterStatus(weather: WeatherType) -> String? {
+    switch weather {
+    case .sun:
+        return nil
+    case .wind(let speed) where speed < 10:
+        return "meh"
+    case .cloud, .wind:
+        return "dislike"
+    case .rain, .snow:
+        return "hate"
+    }
+}
+
+getHaterStatus(weather: WeatherType.wind(speed: 5))
 ```
 
 
@@ -339,7 +431,7 @@ let beatles = firstHalf + secondHalf
 
 
 
-### Compound assignment operators
+### Compound Assignment Operators
 
 Shorthand operators to change variables in place.
 
@@ -353,7 +445,7 @@ quote += "Spaniards"
 
 Remember, this only works on `var`
 
-### Comparison operators
+### Comparison Operators
 
 ```swift
 let firstScore = 6
@@ -367,6 +459,9 @@ firstScore >= secondScore // true
 
 // Compares alphabetical order
 "Taylor" <= "Swift" 
+
+var stayOutTooLate = true
+!stayOutTooLate // false
 ```
 
 You cannot compare an `Int` to a `Double`, not `String` to a number. It is invalid. 
@@ -408,7 +503,7 @@ if firstCard + secondCard = 2 {
 
 
 
-### Combining conditions
+### Combining Conditions
 
 `&&` and `||`
 
@@ -427,7 +522,7 @@ if age1 > 18 || age2 > 18 {
 
 
 
-### The ternary operator
+### The Ternary Operator
 
 ```swift
 let firstCard = 11
@@ -437,7 +532,7 @@ print(firstCard == secondCard ? "Cards are the same" : "Cards are different")
 
 
 
-### Switch statements
+### Switch Statements
 
 ```swift
 let weather = "sunny"
@@ -471,7 +566,7 @@ default:
 
 
 
-### Range operators
+### Range Operators
 
 Two ways to create ranges:
 
@@ -491,6 +586,30 @@ switch score {
 }
 
 // "You did great!"
+```
+
+
+
+Or, in a `for` loop:
+
+```swift
+for i in 1...10 {
+    print("\(i) x 10 is \(i * 10)")
+}
+```
+
+
+
+If you don't care what number you're on, use an underscore:
+
+```swift
+var str = "Fakers gonna"
+
+for _ in 1 ... 5 {
+    str += " fake"
+}
+
+print(str)
 ```
 
 
@@ -521,6 +640,8 @@ for _ in 1...5 {
 
 
 ### While loops
+
+Best to use when using unknown data (e.g. reading an XML file)
 
 ```swift
 var number = 1
@@ -703,7 +824,7 @@ setAge(for: "Paul", to: 40)
 
 
 
-Parameter labels are used extensively in Swift.
+Parameter labels are used extensively in Swift. Common "Swifty" external parameter names include "to", "for", and "with."
 
 
 
@@ -1100,6 +1221,10 @@ result("London")
 
 A `struct` (structure) is one of the two ways Swift lets you design your own types.
 
+It's like an enum, but you can use it to make multiple instances of this type.
+
+
+
 This is a `struct` with one property:
 
 ```swift
@@ -1186,6 +1311,33 @@ progress.amount = 100
 
 A `willSet` is useful if you need to know the state of something before it changes. Useful for animations.
 
+
+
+Swift also provides a value called `newValue` that lets you access the value:
+
+```swift
+struct Person {
+    var clothes: String {
+        willSet {
+            updateUI(msg: "I'm changing from \(clothes) to \(newValue)")
+        }
+
+        didSet {
+            updateUI(msg: "I just changed from \(oldValue) to \(clothes)")
+        }
+    }
+}
+
+func updateUI(msg: String) {
+    print(msg)
+}
+
+var taylor = Person(clothes: "T-shirts")
+taylor.clothes = "short skirts"
+```
+
+
+
 ### Methods
 
 A function inside a `struct` is called a **method**.
@@ -1241,6 +1393,9 @@ print(string.hasPrefix("Do"))
 print(string.contains("Do"))
 print(string.uppercased())
 print(string.sorted()) // Returns array
+
+// trim all whitespace
+let trimmed = letter?.trimmingCharacters(in: .whitespacesAndNewlines)
 ```
 
 
@@ -1262,6 +1417,7 @@ toys.contains("Woody")
 print(toys.sorted())
 toys.insert(at: 0)
 toys.remove(at: 0)
+toys.randomElement()
 ```
 
 
@@ -1270,7 +1426,7 @@ toys.remove(at: 0)
 
 Initializers are special methods that provide different ways to create your struct. 
 
-All structs come with one by default, called their **memberwise initializer**. If you create your own then you must give all propeties a value.
+All structs come with one by default, called their **memberwise initializer**. If you create your own initializer then you **must** give all propeties a value (the memberwise initializer would be removed).
 
 ```swift
 struct User {
@@ -1313,6 +1469,10 @@ struct Person {
 
 Adding `lazy` to a property keeps it from being created unless it's needed.
 
+However unline a computed property, the result that gets calculated gets stored, so subsequent accesses to the property don't redo the work (performance boost).
+
+Use only when needed.
+
 ```swift
 struct FamilyTree {
     init() {
@@ -1336,11 +1496,15 @@ var ed = Person(name: "Ed")
 ed.familyTree
 ```
 
+**Note:** these cannot be used on constant structs.
+
 
 
 ### Static Properties and Methods
 
 A **static** property is a property that is shared across all instances of the struct.
+
+You must reference the struct instead of `self` to update a `static` variable (e.g. `Student.classSize`)
 
 ```swift
 struct Student {
@@ -1364,7 +1528,7 @@ print(Student.classSize)
 
 ### Private and Public Properties
 
-If you want to stop a property from being accessed, add the **private** keywod:
+If you want to stop a property from being accessed, add the **private** keyword:
 
 ```swift
 struct Person {
@@ -1380,13 +1544,21 @@ struct Person {
 }
 ```
 
+Also useful if you just want to show which properties should be used, and which don't ever need to be accessed (i.e. decreases "surface area").
+
+**Note:** If a property is private, Swift cannot generate its memberwise initializer. You must write it yourself if you have non-private properties in the `struct`. 
+
+
+
+Another option is **fileprivate** which means that only Swift code in the same file as the type can read and write the property.
+
 
 
 ## Classes
 
 There are 5 differences between Classes and Structs.
 
-1. Classes never come with a memberwise initializer. You must always create your own initializer.
+1. Classes never come with a memberwise initializer. You must always create your own initializer. This is to allow inheritance.
 
 ```swift
 class Dog {
@@ -1418,6 +1590,7 @@ class Dog {
 }
 
 // Create a new class
+// "class Poodle extends Dog"
 class Poodle: Dog {
     init(name: String) {
       	// You need to call super.init() for safety reasons.
@@ -1462,7 +1635,7 @@ final class Dog {
 
 
 
-3. When you copy a struct, you make two different copies. When you copy a class, they both point to the same thing.
+3. When you copy a struct, you make two different copies (a struct is a value type). When you copy a class, they both point to the same thing (a class is a reference type). A copy of a class is also called an **object**.
 
 ```swift
 class Singer {
@@ -1495,6 +1668,7 @@ class Person {
         print("Hello, I'm \(name)")
     }
   
+  	// Note, no ()
     deinit {
       print("\(name) is no more!")
 	  }
@@ -1529,11 +1703,20 @@ class Singer {
 
 
 
+### Choosing Classes vs Structs
+
+- If you want to have one shared state that gets passed around and modified in place, you're looking for classes. You can pass them into functions or store them in arrays, modify them in there, and have that change reflected in the rest of your program.
+- If you want to avoid shared state where one copy can't affect all the others, you're looking for structs. You can pass them into functions or store them in arrays, modify them in there, and they won't change wherever else they are referenced.
+
+Always use structs until you have a specific reason to use classes.
+
+
+
 ## Protocols and Extensions
 
 ### Protocol Basics
 
-Protocols are a way of describing what properties and methods something must have--basically creating your own types.
+**Protocols** are a way of describing what properties and methods something must have--basically creating your own types.
 
 You then tell Swift which types use that protocol – a process known as **adopting** or **conforming** to a protocol.
 
@@ -1582,9 +1765,9 @@ protocol Employee: Payable, NeedsTraining, HasVacation { }
 
 ### Extensions
 
-Extensions allow you to add methods to existing types, to make them do things they weren’t originally designed to do. 
+**Extensions** allow you to add methods to existing types, to make them do things they weren’t originally designed to do. 
 
-Computer properties only. No stored properties.
+Computed properties only. No stored properties.
 
 ```swift
 // Extending the Int type to have a squared method
@@ -1720,6 +1903,27 @@ This is also know as the **crash operator** since it can cause crashes if you're
 
 
 
+Another example:
+
+```swift
+// "Red" definitely exists
+var year = yearAlbumReleased(name: "Red")
+
+// Don't need to do this anymore
+if year == nil {
+    print("There was an error")
+} else {
+    print("It was released in \(year)")
+}
+
+// Just do this
+print("It was released in \(year!)")
+```
+
+An exclamation mark means "I'm certain this contains a value, so force unwrap it now."
+
+
+
 ### Implicitly Unwrapped Optionals
 
 **Implicitly Unwrapped Optionals** can be used without the need to unwrap them using `if let` or `guard let`. Create them like this:
@@ -1753,10 +1957,91 @@ let user = username(for: 15) ?? "Anonymous"
 
 ### Optional Chaining
 
+Examples:
+
+```swift
+let names = ["John", "Paul", "George", "Ringo"]
+let beatle = names.first?.uppercased()
+```
+
+
+
+```swift
+let album = albumReleased(year: 2006)?.uppercased()
+```
+
 
 
 ### Optional Try
 
+An alternative to `try` in a `do/try/catch`. If the function throws an error, result is assigned `nil`:
+
+```swift
+if let result = try? checkPassword("password") {
+    print("Result was \(result)")
+} else {
+    print("D'oh.")
+}
+```
+
+
+
+There is also the `try!`. Use it when you know the function will not fail. If it does, it will crash.
+
+```swift
+try! checkPassword("sekrit")
+print("OK!")
+```
+
+
+
 ### Failable Initializers
 
+A **failable initializer** might work, or might not. In this example, you can use it to return `nil`. Here, the id is only reassigned if it's 9 characters long.
+
+```swift
+struct Person {
+    var id: String
+
+    init?(id: String) {
+        if id.count == 9 {
+            self.id = id
+        } else {
+            return nil
+        }
+    }
+}
+```
+
+
+
 ### Typecasting
+
+An `as?` can check if something is a certain object. Here, the `makeNoise` method is only called if the current `pet` is a `Dog` object.
+
+```swift
+class Animal { }
+class Fish: Animal { }
+
+class Dog: Animal {
+    func makeNoise() {
+        print("Woof!")
+    }
+}
+
+let pets = [Fish(), Dog(), Fish(), Dog()]
+
+for pet in pets {
+  	// perform the typecast
+    if let dog = pet as? Dog {
+        dog.makeNoise()
+    }
+}
+```
+
+
+
+## Helpful Links
+
+[Swift Glossary](https://www.hackingwithswift.com/glossary)
+

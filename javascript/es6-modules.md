@@ -52,6 +52,32 @@ This `import` and `export` syntax is not yet fully supported by all browsers or 
 
 
 
+### Dynamic Imports
+
+```javascript
+// dynamic imports
+import('./some-module').then(
+  allModuleExports => {
+    // the allModuleExports object will be the same object you get if you had
+    // used: import * as allModuleExports from './some-module'
+    // the only difference is this will be loaded asynchronously which can
+    // have performance benefits in some cases
+  },
+  error => {
+    // handle the error
+    // this will happen if there's an error loading or running the module
+  },
+)
+
+// in React:
+import React, {Suspense, Fragment} from 'react'
+// dynamic import of a React component
+const BigComponent = React.lazy(() => import('./big-component'))
+// big-component.js would need to "export default BigComponent" for this to work
+```
+
+
+
 ## CommonJS
 
 CommonJS is the module pattern that’s supported by all versions of Node (see the [Node.js documentation on modules](https://oreil.ly/CN-gA)). You can still use these modules with Babel and webpack. With CommonJS, JavaScript objects are exported using `module.exports`.

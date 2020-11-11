@@ -68,3 +68,40 @@ getPeople(5)
 );
 ```
 
+
+
+## Example in React
+
+```javascript
+// in React:
+function GetGreetingForSubject({subject}) {
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [error, setError] = React.useState(null)
+  const [greeting, setGreeting] = React.useState(null)
+  React.useEffect(() => {
+    async function fetchGreeting() {
+      try {
+        const response = await window.fetch('https://example.com/api/greeting')
+        const data = await response.json()
+        setGreeting(data.greeting)
+      } catch (error) {
+        setError(error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    setIsLoading(true)
+    fetchGreeting()
+  }, [])
+  return isLoading ? (
+    'loading...'
+  ) : error ? (
+    'ERROR!'
+  ) : greeting ? (
+    <div>
+      {greeting} {subject}
+    </div>
+  ) : null
+}
+```
+

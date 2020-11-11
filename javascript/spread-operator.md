@@ -16,3 +16,11 @@ function directions(...args) {
 directions("Truckee", "Tahoe City", "Sunnyside", "Homewood", "Tahoma");
 ```
 
+
+
+```javascript
+console.log({...obj1, ...obj2})
+// is the same as
+console.log(Object.assign({}, obj1, obj2))
+```
+
