@@ -339,6 +339,8 @@ Since `ContentView` is a struct, it is *immutable*. When creating struct methods
 
 To overcome this, Swift gives us a **property wrapper**: a special attribute we can place before our properties to change their functionality. `@State` is one such property wrapper. The value will now be stored in a place where is *can* be changed.
 
+A property wrapper wraps a property inside another struct. When we use `@State` to wrap a string, the actual type of property we end up with is a `State<String>`.
+
 
 
 ### Create State
@@ -807,6 +809,8 @@ To add gestures above a smaller element of the screen, add a background with a .
 
 If you create a new component that uses outside state, you need to bind that state to the component.
 
+`@Binding` creates a two-way data flow. `$` indicates passing in a binding, instead of a value.
+
 ```swift
 // Parent
 struct Home: View {
@@ -833,7 +837,7 @@ struct AvatarView: View {
 
 
 
-If you need to bind to a file with a preview, you need to specify default settings:
+If you need to bind to a file with a preview, you need to specify default settings. Use a **constant binding** which is a binding with a fixed value that can't be changed in the UI. Perfect for previews.
 
 ```swift
 struct HomeView_Previews: PreviewProvider {

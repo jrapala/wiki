@@ -259,7 +259,7 @@ enum WeatherType {
     case snow
 }
 
-func getHaterStatus(weather: WeatherType) -> String? {
+func getWeatherStatus(weather: WeatherType) -> String? {
     if weather == .sun {
         return nil
     } else {
@@ -267,13 +267,13 @@ func getHaterStatus(weather: WeatherType) -> String? {
     }
 }
 
-getHaterStatus(weather: .cloud)
+getWeatherStatus(weather: .cloud)
 ```
 
 or:
 
 ```swift
-func getHaterStatus(weather: WeatherType) -> String? {
+func getWeatherStatus(weather: WeatherType) -> String? {
     switch weather {
     case .sun:
         return nil

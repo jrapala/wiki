@@ -112,3 +112,70 @@ struct Address: Codable {
 }
 ```
 
+
+
+### Creating Custom Codable Conformance
+
+Sometimes we need to write `init(from:)` and `encode(to:)` by hand, such as in the case of using a `@Published` property wrapper.
+
+However, in situations like that, `Codable` can still do a lot of the work for us.
+
+
+
+**Example:** Incoming JSON uses different naming convention (casing):
+
+```swift
+struct User: Codable {
+    var firstName: String
+    var lastName: String
+}
+
+// JSON data
+let str = """
+{
+    "first_name": "Andrew",
+    "last_name": "Glouberman"
+}
+"""
+
+let data = Data(str.utf8)
+
+// Decode
+do {
+    let decoder = JSONDecoder()
+  	// Modify the decoding strategy
+		decoder.keyDecodingStrategy = .convertFromSnakeCase
+  
+    let user = try decoder.decode(User.self, from: data)
+    print("Hi, I'm \(user.firstName) \(user.lastName)")
+} catch {
+    print("Whoops: \(error.localizedDescription)")
+} 
+```
+
+
+
+**Example:** Incoming JSON uses different naming convention (names):
+
+```swift
+struct User: Codable {
+  	// If a CodingKeys enum exists, Swift will use it to decide how to encode
+  	// and decode and object
+    enum CodingKeys: String, CodingKey {
+        case firstName = "first"
+      	case lastName = "last"
+    }
+    var firstName: String
+    var lastName: String
+}
+
+// JSON data
+let str = """
+{
+    "first": "Andrew",
+    "last": "Glouberman"
+}
+"""
+
+```
+
