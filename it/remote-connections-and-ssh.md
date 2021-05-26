@@ -53,3 +53,38 @@ Allows you to connect to a private network, like your work network, over the Int
 
 Lets you access actual resources like shared file servers and network devices as if you are connected to your work network.
 
+
+
+**Remote Connections on Windows (PuTTY GUI)**
+
+1. Launch GUI
+2. Set Host Name/IP address, Port (default port SSH uses is 22), and Connection Type (SSH)
+3. Click Open. A terminal will launch.
+4. Type your username and password.
+
+
+
+**Remote Connections on Windows (PuTTY and Power Shell)**
+
+1. Open Power Shell
+2. Type `putty.exe -ssh juliette@104.131.122.215`
+3. A terminal will launch. Type in your password.
+
+
+
+**Windows - Remote Desktop Protocol (RDP) **
+
+A way to connect to other Windows computers. There are RDP clients for Linux and OS X  too.
+
+A client program called the **Microsoft Terminal Services Client (mstsc.exe)** is used to create RDP connections to remote computers.
+
+
+
+**Enabling Remote Connections on Windows**
+
+1. Open Start Menu
+2. Right click on This PC
+3. Select Properties
+4. Select Remote settings
+5. Pick an option from the Remote Desktop section
+6. If you're on a list of allowed users, you can use mstsc.exe to connect to it from anywhere on the network.
