@@ -98,6 +98,28 @@ A framework which breaks UX design into two main phases: research and design.
 
 
 
+### EVVCC Framework
+
+<img src="../assets/ux-014.jpeg" alt="ux-006" style="zoom:40%;" />
+
+
+
+- **Empathy**: The ability to understand and response to our co-workers and customer needs
+
+- **Value**: The core shared beliefs which inform organizational norms
+
+- **Vision**: Shared alignment in organizational values, goals, and accountability to co-workers and customers
+
+- **Context**: The challenge in relation to the project, person, urgency, risk, benefit, and a range of situational factors
+
+- **Communication**: Articulating needs, goals, intentions, and feedback in conversations and products
+
+  - What is the overall goal of the product and are you addressing your users' needs in correlatin to that?
+
+  ****
+
+
+
 ## Universal Design, Inclusive Design, and Equity-Focused Design
 
 **Universal Design:** The process of creating one product for users with the widest range of abilities and in the widest range of situations.

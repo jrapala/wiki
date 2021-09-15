@@ -12,16 +12,23 @@ Link labels to inputs:
 
 ```html
 // Using attributes
-<label for="username">Username</label>  <input type="text" name="username" id="username">  
+<label for="username">Username</label>
+<input type="text" name="username" id="username">  
 
 // Using a wrapper
-<label>    Username  <input type="text" name="username"></label>  
+<label>
+	Username
+	<input type="text" name="username">
+</label>  
 
 // Using aria-labelledby if there is more than one suitable label
-<h2 id="resetHeading">Reset Password</h2><span id="resetUsername">Username</span>  <input type="text" name="username" aria-labelledby="resetHeading resetUsername">  
+<h2 id="resetHeading">Reset Password</h2>
+<span id="resetUsername">Username</span>
+<input type="text" name="username" aria-labelledby="resetHeading resetUsername">  
 
 // For non-visual labels
-<input type="text" name="searchTerm" aria-label="Search"><button type="submit">Search</button>
+<input type="text" name="searchTerm" aria-label="Search">
+<button type="submit">Search</button>
 
 ```
 
@@ -88,7 +95,7 @@ No need for a hidden span:
 
 ### Click Handlers
 
-Do not add click handlers to non-interavtive elements:
+Do not add click handlers to non-interactive elements:
 
 ```html
 // NO
@@ -100,5 +107,25 @@ Do not add click handlers to non-interavtive elements:
 	<a href="#" @click="checkout">Checkout</a>  
 
 
+```
+
+
+
+### Eay Improvements To Make
+
+1. **Increase Color Contrast**: use WebAIM Contrast Checker
+2. **Increase Font Legibility**
+3. **Improve Semantic Markup**
+4. **Improve Keyboard-Only Navigation**
+5. **Enhance Functionality for Screen Readers**
+
+
+
+### Better Outlines
+
+```css
+*:focus {
+	outline: 4px solid lime; /* use the opposite of your brand color */
+}
 ```
 
