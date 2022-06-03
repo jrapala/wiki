@@ -10,7 +10,51 @@
   - 1. Language
     2. Language Server (auto-completes, tooltips)
     3. Compiler (used by the server to perform the type-checking, and a way to emit JS files)
+       - **Transpilation**: a method where code from one language is "compiled" or converted into another language.
 - Works seamlessly with Babel 7 (can use TS files, but does not type-check)
+- TypeScript is a development-time technoloy. There is no runtime component.
+
+
+
+## Benefits of TypeScript
+
+- Static Typing
+
+- Object-Oriented Programming (OOP) capabilities
+
+  - **Object Oriented Programming**
+    - Four Major Principles:
+      1. Encapsulation
+         - Information hiding. Data is put in a container (usually a `class`). The container protects that data so nothing outside of it can modify or view it. To use the data, you need to use functions that are controlled by the container object.
+         - There's no way to hide an object member in JavaScript. TypeScript, however, supports encapsulation with access modifiers such as the `private` method.
+      2. Abstraction
+         - Related to encapsulation. You hide the internal implementation of how data is managed and provide a more simplified interface to the outside code.
+         - Code that is responsible for one set of data should be independent and separated from other code. Ideally, you can change this without adverselt affecting the code in another part.
+         - Interface are like classes whose members have no actual working code. It just reveals names and types of object members. 
+         - JavaScript does not support interfaces or abstract classes, but TypeScript supports both.
+      3. Inheritence
+         - Code reuse. Write code once and share it across many others.
+         - Both JavaScript and TypeScript support classes and inheritance. 
+           - Inheritance is supported via protypical inheritance. Every object instance of a specific type shares the same instance of a single core object (the prototype)
+           - In TypeScript, classes can inherit from other classes, but they can also inherit from interfaces and abstract classes. Also allows for multiple inheritance using mixins. 
+      4. Polymorphism
+         - It is possible to create an oject that can be set to one of any number of possible types that inherit from the same base lineage. Useful in a scenario where the type needed in not immediately knowable but can be set at runtime once the appropriate circumstances have arisen.
+         - Technically possible in JavaScript due to its dynamic typing. However with TypeScript, static typing is on by default and forces type declaration when the variable is first created.
+    - JavaScript is an OOP language, but the implementation is limited
+
+  
+
+## Types
+
+A **type** is a reusable set of rules. May include properties and functions (capabilities).
+
+When you reuse a type, you are creating an **instance** of it.
+
+### Dynamic Typing vs Static Typing
+
+JavaScript is a dynamically typed language. New variables do not need to declare their type even after they are set. They can be reset to a different type.
+
+TypeScript uses **static typing**. It forces the developer to indicate the type of a variable up front when they create it.
 
 
 

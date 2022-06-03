@@ -101,7 +101,15 @@
 
 - **Mobile and touch devices** (see the W3C documents: [Mobile Accessibility: How WCAG 2.0 and Other W3C/WAI Guidelines Apply to Mobile ![opens in a new window](https://dequeuniversity.com/assets/images/template/courses2014/new-window.png)](http://w3c.github.io/Mobile-A11y-TF-Note/) and [Proposed New WCAG 2.0 Techniques for Mobile ![opens in a new window](https://dequeuniversity.com/assets/images/template/courses2014/new-window.png)](https://www.w3.org/WAI/GL/mobile-a11y-tf/wiki/New_WCAG_2.0_Techniques))
 
-- 
+- [The Principles of Universal Design ![opens in a new window](https://dequeuniversity.com/assets/images/template/courses2014/new-window.png)](https://www.ncsu.edu/ncsu/design/cud/pubs_p/docs/poster.pdf)
+
+- [task force on cognitive disabilities ![opens in a new window](https://dequeuniversity.com/assets/images/template/courses2014/new-window.png)](https://www.w3.org/WAI/PF/cognitive-a11y-tf/) 
+
+- [Cognitive disabilities user research ![opens in a new window](https://dequeuniversity.com/assets/images/template/courses2014/new-window.png)](https://w3c.github.io/coga/user-research/)
+
+- [Cognitive Accessibility Roadmap and Gap Analysis ![opens in a new window](https://dequeuniversity.com/assets/images/template/courses2014/new-window.png)](https://w3c.github.io/coga/gap-analysis/)
+
+- [Issue Papers for The Cognitive and Learning Disabilities Accessibility Task Force (COGA) ![opens in a new window](https://dequeuniversity.com/assets/images/template/courses2014/new-window.png)](https://w3c.github.io/coga/issue-papers/) (Note: At the time this module was written, this document is the most incomplete and least polished of the three mentioned here)
 
   
 
