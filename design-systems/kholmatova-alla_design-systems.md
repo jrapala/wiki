@@ -180,7 +180,60 @@ Loaders/catchy sounds/microinteractions can add additional layers of depth and m
 ### Small-Scale Experiments
 When exploring new styles, try them out on a small area of the site. If they work, gradually fold them into the system by applying them to other areas of the site. Be conscious of the role they play.
 
+#### Balancing Brand with Business Requirements
+Be cautious of adding features that don't sit comfortably with the brand, due to business requirements (e.g. a "new!" banner). If the requirement scales up, it may affect the overall design.
+
 ## Chapter 5: Shared Language
+Creating cohesive design systems requires a shared language. 
+
+"...groups of people can conceive their larger public buildings, on the ground, by following a common pattern language, almost as if they had a single mind." - Christopher Alexander, The Timeless Way of Building
+
+Everyone - designers, developers, researchers, product managers, content producers - should have some degree of fluency. Fluency will improve over time.
+
+#### Naming Patterns
+Don't give object presentational names, e.g. a "pink" button can only be pink.
+
+Sometimes it takes experimentation to find an approach that works. 
+
+"The main problem with presentation based naming is that you can't find what you are looking for when the number of patterns in your library increases. It also give you no guidance or inspiration for when to use a specific pattern. People start to build more and more new patterns instead of reusing and enhancing the existing ones, which makes the problem worse and worse over time." -Tobias Ritterbach, experience owner, Sipgate
+
+Atlassian names components after what users call them, e.g. Lozenges, Inline Edit. It drives user empathy.
+
+A good name should be focused, memorable and embodies the purpose of the module it represents. It is the name people relate to and want to use. Effective names are metaphorical, have a personality, and communicate the purpose of a pattern.
+
+#### Good Names Are Based pm Metaphors
+e.g. Brackets support and strengthen a structure, like a building. A "bracket" component can be a small blurb that supports the main content.
+
+e.g. A "spotlight" draws attention to a specific piece of content.
+
+Names like "Progress Toggle Button" or "Binary Radio Button" don't work.
+
+If no one remembers it, there's a high cahnce that people will recreate the pattern instead of reusing it.
+
+#### Good Names Have a Personality
+e.g. Small secondary buttons called "Minions"
+e.g. Large button called a "Boss" (the main CTA)
+
+These are easier to remember and can inspire other names. "Boombox" leading to a "Whisperbox" for a less distacting promotional element
+
+#### Good Names Communicate the Purpose
+Even a few good names can make your vocabularly more compelling, and the team will be more likely to use it and contribute to it.
+
+If you find yourself struggling to come up with a name, changes are something isn't quite right. Maybe a module's purpose is unclear, or it overlaps with another's.
+
+Eurostar had an interface used specifically to improve SEO. They named it "le blurb." Purpose: to provide interesting information aiming to improve SEO.
+
+Approaching difficult naming decisions with humor can help.
+
+#### Naming Collaboratively
+Don't leave it up to the developers to name things. 
+
+Ideas:
+1. Set up a dedicated channel. Share a mockup/existing module, describe what it's for and what distinguishes it. Maybe share names you have come up with already. Discuss. Simply talking it through will strengthen and evolve the shared language. 
+	- Next, you may want to test your language with your users. Try modules on paper cards that users can interact with. You may find your "prominents tabs" are ignored or that your "wizard control" is interpreted as a set of optional tabs.
+
+#### Immersing Your Team in the Design Language
+
 
 ## Chapter 6: Parameters of Your Systems
 
