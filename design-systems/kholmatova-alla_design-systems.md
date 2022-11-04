@@ -32,6 +32,8 @@ A design system is a set of interconnected patterns and shared practices coheren
 - Patterns: the repeating elements (e.g. user flows or buttons)
 - Practices: how we choose to create, capture, share, and use those patterns
 
+The purpose of a design system is to help achieve the purpose of a product.
+
 ### Design Patterns
 The purpose of the product shapes the design patterns it adopts (quick scanning data vs thoughtful reading). The ethos (or brand) also forms perceptual patterns.
 
@@ -69,11 +71,13 @@ A design system can be considered to be effective when it combines cost-effectiv
 ---
 Solid principles are the foundation for any well-functioning system.
 
+Teams choose how to achieve the product's purpose through design. The more aligned they are on their principles, the more cohesive they patterns they create.
+
 Design principles are shared guidelines that capture the essence of what good design means for the team, and advice on how to achieve it. 
 
 Establish a few grounding values and principles to make sure that the purpose of the product is manifested through design. Can be brand-focused, e.g. "Lucid/Animated/Unbreakable" (Pinterest), or process-focuesed, e.g. "Do less. Iterate. Then iterate again." (UK GDS)
 
-Lerger companies might have separate sets of principles for the user experience, the brand and the design system. Each team might also have their own team principles. Note: this can contribute to a design system's fragmentation.
+Larger companies might have separate sets of principles for the user experience, the brand and the design system. Each team might also have their own team principles. Note: this can contribute to a design system's fragmentation.
 
 ### Effective Design Principles
 1. They're authentic and genuine
@@ -230,7 +234,16 @@ Don't leave it up to the developers to name things.
 
 Ideas:
 1. Set up a dedicated channel. Share a mockup/existing module, describe what it's for and what distinguishes it. Maybe share names you have come up with already. Discuss. Simply talking it through will strengthen and evolve the shared language. 
-	- Next, you may want to test your language with your users. Try modules on paper cards that users can interact with. You may find your "prominents tabs" are ignored or that your "wizard control" is interpreted as a set of optional tabs.
+2. Test your language with your users. Try modules on paper cards that users can interact with. You may find your "prominents tabs" are ignored or that your "wizard control" is interpreted as a set of optional tabs. Use these as suggestions, not gospel.
+3. Immersing your team in the design language. Make it omnipresent. People who aren't initially interested will learn passively, through exposure.
+	- Consider a pattern wall. Print and display screens of your product on a wall. Start with the most crucial/frequently used. Label the most prominent patterns.
+	- Consider a Slack pattern bot. "Good morning! Just a reminder that this is... (Image of pattern with it's name)" (also, frontify.com will ping channels when a library is updated)
+4. Refer to the objects by their names. It needs to be part of day-to-day conversation.
+5. Name is part of the induction process. Perhaps a course with quiz.
+6. Organize regular design system catch-ups. 30 mins with a well structured agenda. Weekly, then fortnightly. Teams can use this to agree on overarching patterns, such as icons or typography across the product. It's also a good opportunity to share new modules and dicuss their purpose, usage, and any problems and questions people might have.
+7. Encourage diverse collaboration. Pair on designing and building patterns as much as possible. Pair design system fluent people with people less immersed in the system.
+8. Keep a glossary. Use the same language from code to customer. See Intercom's glossary. Helps you get in a habit of vetting, discussing and articulating your language decisions as a team.
+
 
 #### Immersing Your Team in the Design Language
 
