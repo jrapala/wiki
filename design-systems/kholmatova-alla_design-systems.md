@@ -113,6 +113,10 @@ Patterns can be combined to create complex patterns that achieve a shared purpos
 
 Patterns are the physical embodiment of the behaviors we're trying to encourage or enable through the interface. No need for 30 different product displays.
 
+Through the interface we aim to help people accomplish certain goals and feel a certain way: learn a new recipe; focus on writing; feeling productions; feel inspired.
+
+The purpose of the patterns needs to be thoroughly understood by the team. Only then can we make sure it is interpreted as intended by our users.
+
 ### Defining Function Patterns
 Techniques:
 -  Create a Pattern Map
@@ -188,11 +192,14 @@ When exploring new styles, try them out on a small area of the site. If they wor
 Be cautious of adding features that don't sit comfortably with the brand, due to business requirements (e.g. a "new!" banner). If the requirement scales up, it may affect the overall design.
 
 ## Chapter 5: Shared Language
+---
 Creating cohesive design systems requires a shared language. 
 
 "...groups of people can conceive their larger public buildings, on the ground, by following a common pattern language, almost as if they had a single mind." - Christopher Alexander, The Timeless Way of Building
 
 Everyone - designers, developers, researchers, product managers, content producers - should have some degree of fluency. Fluency will improve over time.
+
+Patterns should be connected by a shared language - a deeply rooted knowledge in the team about how to create and use design patterns for a particular product to create effective and coherent user experiences. This knowledge is propagated through a shared design approach, front-end architecture, brand vision, and daily practices such as collaborative naming, cross-discipline pairing, making patterns visible, conducting regular interface inventories, and maintaining a pattern library. The language should be evolved, strengthened, iterated and continuously tested.
 
 #### Naming Patterns
 Don't give object presentational names, e.g. a "pink" button can only be pink.
@@ -235,28 +242,147 @@ Don't leave it up to the developers to name things.
 Ideas:
 1. Set up a dedicated channel. Share a mockup/existing module, describe what it's for and what distinguishes it. Maybe share names you have come up with already. Discuss. Simply talking it through will strengthen and evolve the shared language. 
 2. Test your language with your users. Try modules on paper cards that users can interact with. You may find your "prominents tabs" are ignored or that your "wizard control" is interpreted as a set of optional tabs. Use these as suggestions, not gospel.
-3. Immersing your team in the design language. Make it omnipresent. People who aren't initially interested will learn passively, through exposure.
-	- Consider a pattern wall. Print and display screens of your product on a wall. Start with the most crucial/frequently used. Label the most prominent patterns.
-	- Consider a Slack pattern bot. "Good morning! Just a reminder that this is... (Image of pattern with it's name)" (also, frontify.com will ping channels when a library is updated)
-4. Refer to the objects by their names. It needs to be part of day-to-day conversation.
-5. Name is part of the induction process. Perhaps a course with quiz.
-6. Organize regular design system catch-ups. 30 mins with a well structured agenda. Weekly, then fortnightly. Teams can use this to agree on overarching patterns, such as icons or typography across the product. It's also a good opportunity to share new modules and dicuss their purpose, usage, and any problems and questions people might have.
-7. Encourage diverse collaboration. Pair on designing and building patterns as much as possible. Pair design system fluent people with people less immersed in the system.
-8. Keep a glossary. Use the same language from code to customer. See Intercom's glossary. Helps you get in a habit of vetting, discussing and articulating your language decisions as a team.
-
 
 #### Immersing Your Team in the Design Language
-
+Ideas:
+1. Immersing your team in the design language. Make it omnipresent. People who aren't initially interested will learn passively, through exposure.
+	- Consider a pattern wall. Print and display screens of your product on a wall. Start with the most crucial/frequently used. Label the most prominent patterns.
+	- Consider a Slack pattern bot. "Good morning! Just a reminder that this is... (Image of pattern with it's name)" (also, frontify.com will ping channels when a library is updated)
+2. Refer to the objects by their names. It needs to be part of day-to-day conversation.
+3. Name is part of the induction process. Perhaps a course with quiz.
+4. Organize regular design system catch-ups. 30 mins with a well structured agenda. Weekly, then fortnightly. Teams can use this to agree on overarching patterns, such as icons or typography across the product. It's also a good opportunity to share new modules and dicuss their purpose, usage, and any problems and questions people might have.
+5. Encourage diverse collaboration. Pair on designing and building patterns as much as possible. Pair design system fluent people with people less immersed in the system.
+6. Keep a glossary. Use the same language from code to customer. See Intercom's glossary. Helps you get in a habit of vetting, discussing and articulating your language decisions as a team.
 
 ## Chapter 6: Parameters of Your Systems
+---
+What are some of the qualities a design system can have and ways in which risks and downsides can be managed?
+
+Understanding which module to use should be easy. Don't make it easier to add a new one instead.
+
+What shapes a system?
+- The structure of your organization
+- Your team culture
+- The type of product you're working on
+- Your design approach
+- etc..
+
+### Three Continuums
+Where do you fall in these continuums?
+
+#### Rules: Strict <--> Loose
+**Example: Airbnb**
+- Strict
+- Design Language System is managed by separate team.
+- Standardized Specifications: Modules are specified precisely. e.g. eight-pixel grid for spacing. Naming conventions are consistent. 
+- Design is fully synchronized with engineering. Sketch files and code match, and are cross-platform. Syncing is a priority. 
+- Strict process for introducing new patterns:
+			1. A designer submits a proposal using a Sketch template with instructions about related behavior/rules. They suggest a suitable name and provide an example of how the proposed component can be used in context.
+			2. The proposal then goes to the product support team via JIRA, along with the Sketch file. In many cases, the support team finds that a similar module exists already, or that an existing module should be updated.
+			3. If a need for a new module is justified, the proposal goes to the DLS team, who consider the requirement and decide if the proposde design will work. Sometimes they use the proposed solution, sometimes they adapt or redesign it, to make sure it fits with the system.
+- Comprehensive Detailed Documentation
+	- Tools team built an automated process that generated screenshots and metadata about components, and publishes them to the guidelines site. Documentation is fully in sync with the Sketch file and code.
+
+**Example: TED**
+- Loose
+- 5-6 people are resonsible for design system decisions
+- Feel and utility take priority over perfect visual consistency
+- Introducing an additional color or diverging from a standard layout is not a major concern
+- Lo-fi paper sketches with rudimentary notes instead of detailed specs. Designers/engineers work collaboratively to bring it to life.
+- Simple documentation. A collection of swatches instead of a comprehensive pattern library.
+- Still, a deep mutual understanding of the purpose of patterns and their usages.
+
+Stricter systems provide precise and predicatable outcomes and visual consistency. They can also become rigid, to the point that you start to make UX compromises for the sake of consistency.
+- There should be opportunities outside the boundaries of the system, such as creative experiments and side projects. People need to be able to challenge rules. And that means rules need to be understood (i.e. documentation is essential).
+
+Loose systems allow experimentation but can quickly become messy and fragmented. For it to work, everyone needs to be fully aligned on a product's purpose and design approach. It needs to be ingrained deeply into the culture. Even loose systems need solid foundations.
+
+#### Parts: Modular <--> Integrated
+Modularity means parts are interchangeable and can be assembled together in various ways to meet different or changing user goals.
+
+Integration means parts are not interchangeable. There's connections between them that can't be fit in different ways.
+
+**Advantages to modular approaches:**
+- It's agile. Multiple teams can design/build modules in parallel.
+- Cost-effective. Modules are reusable.
+- Easy to maintain. You can fix a problem in one module without affecting others.
+- Adaptable. Modules can be assembled in ways that meet different user needs.
+- Have a generative quality. You can create entirely new outcomes by introducing new patterns or combining them in new ways.
+
+**Advantages of integrated approaches:**
+- Can be specific to a particular content, context, story, or art direction
+- Tend to be more coherent and connected
+- Can be built quicker as one-offs. No time needs to be spent on making the parts reusable.
+- Easier to coordinate. Everyone on the team works towards one purpose.
+
+	- Patterns should be modular and resuable, like Lego. But the extent of that should depend on your team.
+	- Modularity may make sense at the implementation level, but not in the design (e.g. "Greendo" apartments). The extent of modularity should depend on what you're trying to achieve.
+
+**The modular approach is best suited for products that:**
+- Need to scale and evolve
+- Need to adapt to different user needs
+- Need a large number of repeating parts
+- Have multiple teams working on them concurrently and independently
+- **Example Products:** large-scale sites for e-commerce, news, e-learning, finance, government, etc..
+
+**The integrated approach is best suited for products that:**
+- Are designed for one specific purpose
+- Don't need to scale or change
+- Require art directions outside the boundaries of the system
+- Have few shared repeating parts
+- Are one-offs that are unlikely to be reused
+- **Example Products:** creative conference websites, one-off marketing campaigns (even if the rest of your brand is modular), creative portfolios, showcases
+
+**Drawbacks of modularity:**
+- Building reusable modules is more time-consuming (use cases? how will they work across the system?)
+	- Return on investment can take a long time
+- Modules have to be fairly generic to accommodate a variety of use cases
+	- To be innovative, you may need to have distinct content, a strong voice, or and effective use of perceptual patterns
+- To make it worthwhile, teams may force the reuse of modules. Reusability > impact
+	- Making modules connect seamlessly is hard.
+		- To prevent this, don't just focus on modules, but focus on the connections between them as well: e.g. rules of how they relate to each other, their relative importance (i.e. loudness), their role in the user journey, their hierarchy in overall composition
+		- The degree of modularization can change over time. You may start with just a few shared styles and principles. As is grows, you may notice more repeating patterns.
+
+#### Organization: Centralized <--> Distributed
+**Centralized Model**
+- One group:
+	- Defines patterns/rules
+	- Has veto power over the system
+	- Manages the pattern library and other resources where patterns are stored
+- If someone if reponsible for it, it it more likely that the system will be curated, maintained and evolved.
+- Creative direction is focused and opinionated, because it comes from one source
+- This model is used in design-led companies like Apple and Airbnb
+- May not work if each team has strong views on what their design should be.
+- May bottleneck and slow down the entire product's life cycle.
+	- At Airbnb, adding a new module can take up to two weeks.
+- You can still have an open source model for contributions. Allow anyone to contribute. Actively encourage it.
+
+**Distributed Model**
+- Everyone who uses the system is responsible for maintaining and evolving it
+- These tend to be more agile and resilient - if you team misses something, another can pick it up.
+- Good for small companies
+- Note: If someone is not in charge, work can slow down or stop completely. Instead of everyone contributing a little, you may just see a few people contributing a lot.
+
+### Choosing the Right System
+
+**Conway's Law:** Organizations which design systems [...] are contrained to produce designs which are copies of the communication structures of these organizations
+- Team culture will be inevitably reflected in the design system
+
+At the heart of every effective design system aren't the tools, but the shared knowledge about what makes good design and UX for your particular team and your particular product. If that knowledge is clear, everything else will follow.
+
 
 ## Chapter 7: Planning and Practicalities
+---
 
 ## Chapter 8: Systemizing Funcational Patterns
+---
 
 ## Chapter 9: Systemizing Perceptual Patterns
+---
 
 ## Chapter 10: Pattern Libraries
+---
+
 
 
 
