@@ -373,16 +373,425 @@ At the heart of every effective design system aren't the tools, but the shared k
 
 ## Chapter 7: Planning and Practicalities
 ---
+Working on a design system as a side project is not enough. You need widespread support from your peers and senior stakeholders in the business.
 
-## Chapter 8: Systemizing Funcational Patterns
+### Getting Support from Senior Stakeholders
+You need to demostrate that an effective design system will help to meet business goals faster and at lower cost.
+
+**Examples of Benefits**
+1. Time Saved on Designing and Building Modules
+	- The first time you build a component in a modular, it can take twice as long as building a simple component. However, once you use it again, it is free.
+	- Buttons can cost hundreds of thousands of dollars to design and build. 
+		- "If your enterprise has 25 teams each making buttons, then it costs your enterprise $1,000,000 to have good buttons." - Nathan Curtis
+		- http://smashed.by/goodbuttons
+2. Time Saved on Making Site-Wide Changes
+	- A bloated and inefficient system means that even the smallest changes are time-consuming and fiddly to make.
+	- "Designed for Growth" article by Etsy's Marco Suarez
+		- Tech and design debt slow teams down
+	- Reusable patterns are updated automatically everywhere they are used.
+	- Modules get better the more they are used
+3. Faster Product Launch
+	- Building a page using patterns from a library takes days. New designs take weeks.
+
+The winning arguments tend to focus on demonstrating and quantifying the cost of inefficiency.
+
+**Other Benefits**
+- Brand Unity at Scale
+	- A design system can unify a growing product or line of products
+- Visual Consistency
+	- A consistent visual representation helps people learn the interface quicker and reduce cognitive load by making things familiar and predictable. It helps make an interface feel intuitive. 
+- Teamwork and Collaboration
+	- You can build on another's work, instead of recreating the same things from scratch. Productivity improves.
+
+Consider trying a design system on a small test project to see how effective it can be.
+
+### Where to Start
+
+#### Agree on Your Goals and Objectives
+- What are the main outcomes you're hoping to accomplish? Clear goals = direction
+- Include objectives with specific measurable steps
+
+1. Systematize the Interface(s)
+	- Define guiding design principles
+	- Define and standardize reusable design patterns
+	- Establish a pattern library
+	- Set up master design files with up-to-date patterns
+	- Refactor code and front-end architecture to support the modular approach
+2. Establish Shared Processes and Governance
+	- Set up knowledge-sharing processes through conversations, collaboration, pairing, training
+	- Promote the pattern library and ecourage its use across the company
+	- Promote shared design language across teams and disciplines
+	- Make introduction to the design system part of the induction process
+
+Create a simple roadmap to give the team a collective understanding of priorities and how the system will evolve.
+
+Try to integrate design system stories into the main product's road map.
+
+https://smashed.by/systemsroadmap
+
+#### Make Your Progress Transparent
+Teams who make their work public tend to progress faster. 
+Knowing others may be using it as a resource may provide additional motivation.
+
+Write blog posts about your successes, your mistakes, stumbling blocks, and things you'd do differently next time.
+
+#### Create a Culture of Knowledge Sharing
+
+**Examples**:
+- Dedicated Slack channel
+- Pattern wall
+- Design system inducation as part of onboarding
+- Regular catch-ups
+- Encourage collaboration
+- Workshops/tutorials on changes. Include the problems you are trying to solve and the solutions you implemented.
+- Dedicate each day to a component in the interface (Vitaly Friedman would put a print out in the bathroom)
+
+#### Keep Up the Team's Morale
+Working on a design system is a long term process. You may not see the rewards for some time.
+
+The reward is when you see others use your module and when someone comments on how helpful the information was for them.
+
+Consider getting a lot of patterns up to 80% in a short amount of time. Then, spend time refinining. 
+
+If you need to do an audit, get multiple teams involved. It will provide a shared sensed of ownership.
+e.g. If you want living modules (code for modules in website match code in pattern library), consider adding screenshots first, and replacing them.
+
+### Practice Thinking in Systems
+You can't take an existing design and try to break it into modules. Each module needs to have a clear purpose, definition, name, role, needs to be reusable, etc..
+
+
+## Chapter 8: Systemizing Functional Patterns
 ---
+Products can be designed around similar user goals and needs, while encouraging entirely different behaviors (e.g. Slack supports collaborative styles of work)
+
+Think of behaviors when connecting patterns with the design intent and ethos of the product.
+
+### A Purpose-Directed Inventory
+The purpose of an inventory is not to account for all of the visual inconsistencies, but to define the most essential design patterns and get mutual understanding in the team on how they should work across the system.
+
+A typical outcome of an inventory: a list of elements that need to be standardized, along with some sketches and ideas of how patterns should be defined.
+
+When you group things by purpose (the behaviors they're designed to encourage or enable), you might end up with things in the same group that look very different. 
+
+Don't focus on making all of the buttons look consistent. Focus on using the correct component to communicate purpose. (e.g. link vs button)
+
+### Preparation
+- Do an audit after foundational UX work, like user research, content strategy, information architecture, design direction
+- Both designers and front end developers should take part, but include back-end developers, people with content backgrounds, and product managers as well. Should be 4-8 people. If more people are needed, do it with representatives from different disciplines. 
+- Identify key screens/user flows that are fundamental (10-12 screens) when getting started. Have two printouts, hang one on the wall and cut the other one up. The first printout will keep you focused on the bigger picture.
+
+### Step 1: Identify Key Behaviors
+Identify the key user needs and behaviors you want to support at each segment of the user journey.
+- For a small app, just a few screens and different states of the same screen
+- For larger products, group pages into segments of the journey
+- If you have too many pages in the same segments supporting similar behaviors, it's an indication that your information architecture might need work
+- If a screen supports several behaviors, the most important actions should be clear and not in conflict with one another
+
+Pay attention to wording. Instead of designing of "retention", design for "engagement". Instead of designing of "promotion", design for "discovery".
+
+Successful businesses join user goals with business goals.
+
+Break down behaviors into actions. 
+The actions for "Book discovery" can be:
+- Scan for interesting books
+- Refine list of recommended books
+- Control how the list is presented
+- View and learn about a book
+- Make a selection of books you might like
+- Shortlist and reserve books
+
+### Step 2: Group Existing Elements By Purpose
+Taking one behavior at a time, look across all the pages to find the elements that support it. e.g. "View a book" may look different in different places
+- Cut them out and arrange in group
+- These are candidates to be defined as patterns
+
+### Step 3: Define Patterns
+Decide how to deal with the items in each group. Should they be merged into one pattern, or kept separate?
+
+**Techniques:**
+- Specificity Scale
+	- Generic (e.g. exhibitions) vs Specific (e.g. content block)
+	- This can be tricky. Too specific and it's harder to maintain/keep consistent. Too generic and it looks like a more generic design.
+	- What are you trying to achieve?
+- Content Structure
+	1. List the core content slots a module needs to be effective (e.g. is an image essential?)
+	2. Determine the hierarchy of elements and decide how they should be grouped (e.g. is the icon part of the key info or the image?)
+	3. Make sketches to visualize the structure. Find the optimal design.
+	- If elements share the same structure, it can be merged into the same pattern.
+	- If you struggle to unify structures without compromising their purpose, then they probably shouldn't be merged.
+	- Similar structures, but need to look/behave differently? It's a variant. There's a default pattern + additional styles
+
+When assessing your groups of patterns, thing "If I change this module, do I want the others to change in the same way?"
+
+Looking at the relationship between the content structure and styles can increase the reuse of more patterns. e.g. "book title" --> "large title"/"small title"/"small metadata"
+
+### Naming
+Try to find a name that reflects a pattern's position on the specificity scale. e.g. Use "Page Tabs" instead of "Course Tabs". If it's generic, it can be used elsewhere.
+
+Naming should be a engineering/design joint decision. Effective names guide usage and reduce the chances of duplicate patterns.
+
+### Granular Patterns
+Repeat the process for more granular patterns like buttons, links, headings, etc..
+
+If you have elements with similar purposes, think of them in relation to each other rather than independently. How are buttons different from links? 
+
+#### Links vs Buttons
+A link navigates the user away from the current page. 
+A button submits an action and toggles something in the interface.
+We, however, often mark up links as buttons.
+
+In IBM's Carbon, links are a navigational element. Buttons are only used if the user’s action will change or manipulate data.
+In Shopify's Polaris, buttons can represent any type of action, including navigation. Links are used both for embedded actions and for navigation.
+
+The most important aspect is a consistent expression of purpose.
+
+Heydon Pickering in Inclusive Design Patterns: differentiate between links and CTAs, rather than buttons and links. Button CTAs and link CTAs look similar, but have subtle differences.
+
+![[cta-buttons-links.png]]
+
+Standard links are typically optional information that is embedded within content. CTA links are more important.
+
+### Visual Hierarchy
+In Marvel’s design system, “flat” buttons are used to signify “necessary or mandatory actions”; “ghost” buttons are used to signify “optional, infrequent or subtle actions.” Flat buttons can be used alongside each other, when actions are equally important.
+
+In other systems (Atlassia, Polaris), primary buttons should only appear once per screen, to represent the most important action in any experience.
+
+Polaris: "Plain", "Outline", "Basic", and "Primary" buttons. The default is "Basic". Other styles are used only if a button requires more or less importance.
+
+
+### Special Cases
+Special cases will always occur. Giving them generic names will be difficult. You may just need to give it a memorable name instead. (e.g. a "Mark Complete" button that is animated)
+
 
 ## Chapter 9: Systemizing Perceptual Patterns
 ---
+What's important is not the styles themselves, but the effect they have. A functional tool should be useful, usable, and feel simple, safe, robust.
+
+A set of shared colors is not enough. You also need a shared use of color in the context of the product. Links and headings should not be the same color.
+
+### Signature Patterns
+A signature patterns exercise is useful to get the whole team on the same page, especially if they're not used to thinking about perceptual patterns.
+
+Think not only about the properties but also high-level principles, combinations of different elements, and the relationships between them. Ask each person to write down the most memorable and distinct elements that make your product feel a certain way. e.g. "The pick tick always makes me smile."
+
+It's also helpful to identify places where the design is off brand.
+
+Your final list may have:
+- Voice/Tone
+	- "Direct, positive, encouraging tone of voice"
+- Color
+	- "Primarily white color palette with pink accents"
+- Shapes
+	- "Mostly square and occasionally circular shapes"
+- Typography
+	- "Generally large typesize, focus on readability"
+	- "Europa typeface"
+	- "Generous whitespace"
+- Animations
+	- "Small, soft movements or no movement at all"
+	- "Pink to blue subtle hover, opacity, gradual color change"
+
+### Identifying Perceptual Patterns
+Get your list of styles (e.g. color, typography, interactice states) and systemize them:
+1. Start with the purpose
+2. Collect and group existing elements
+3. Define patterns and building blocks
+4. Agree on the guiding principles
+
+There will be overlaps and this is good. You can build on the properties you’ve defined previously and you can see how they relate to each other. e.g. colors in interactive states are used in animations
+
+### Color
+The first step is to make the use of color more consistent. Start by listing the roles color plays in your interface. Color can be used to highlight links/actions, draw attention to messages and differentiate between them, etc..
+
+Create a doc with categories containing the following: type (e.g. CTA), example, value (e.g. hex value), feel. Fill it in with the various color instances that fit the category. You may have 10 links that all look different.
+
+![[color-audit.png]]
+
+Next, define the patterns. When do you use blue links and when gray? (e.g. primary vs support nav vs CTAs related to support, etc..)
+
+The decisions you make here can alter the overall aesthetic of the site. If you decide all CTAs should be red, there will be a lot more red on the site. Some changes may alter the brand's feel, so you may want to avoid.
+
+Create color palettes that are focused, precise, and accessibile. Reduce the number of variables for each color. 8 shades of blue can be reduced to a base, light, and dark version. Start with the colors that you absolutely need. Then, add shades. You may need many if you support dark and light mode, in order to provide sufficient contrast. Shades should be 20% darker/lighter than base, and so on.
+
+Finally, agree on a few basic principles for color usage, e.g. "always use accessibile color contrast" or "We allow our great content to be the color that brings the page to life. We do not color code our sites, or sections within our sites."
+
+### Animations
+These follow the same process: start with the purpose, collect and group existing styles, define patterns and building blocks.
+
+Purpose can be to soften transitions, add emphasis to specific information, or to hide/reveal extra information.
+
+The feel of an animation is important. Quick, soft, bouncy motion can be percieved as lively/energetic. Slow ease-in-outs feel certain and decisive.
+
+When auditing for animations, you can capture them with Quicktime. List the effect (e.g. color change, scale up), example, timing and easing, properties (e.g. opacity 0 -> 0.15), and feel.
+
+Figure out what tones you want to strike throughout the system and try aligning all animations to them.
+
+Two elements animated at the same speed can feel completely different if they are different sizes or travel different distances.
+
+Instead of just a single value, start with a base and provide several incremental steps. For example, if the base time is 0.5 seconds, smaller items that travel a shorter distance (such as an icon scaling up) would take less time. Items that travel longer distances (such as a menu popping up) would require more time. A full-screen transition would be one or two incre- ments above the base value.
+
+At the very least, define some general principles, such as "don't let the animation get in the way of completing a task" or "keep timing short and the motion subtle"
+
+### Voice and Tone
+For users like blind users, the experience of digital products often come through the form of style of writing. Design, brand and marketing teams need to coordinate their efforts when defining patterns.
+
+When auditing voice and tone, also consider how people speak in meetings and in informal conversations.
+
+MailChimp’s Voice & Tone is one of the most effective examples of how language patterns can be defined. The tone shifts to respond to the emotional condition of the user. Humorous & lighthearted to serious & practical
 
 ## Chapter 10: Pattern Libraries
 ---
+A pattern library is not the system itself, but a tool for documenting and sharing design pat- terns. To be effective, it needs a system foundation at its root. 
 
+Multidisciplinary pattern libraries are more resilient and enduring.
+Making a pattern library comprehensive and up to date is impossible without designers’ active involvement. Patterns designed without the content team's input also fall apart.
 
+### Content
+A folder in Google Docs is like an MVP pattern library. Once you have the content, it will be easier to figure out how the website for it should be designed and built.
 
+Get your core patterns and definitions down quickly. Build the pattern library website later.
+
+### Organzation of Patterns
+Just have a common methodology to start. The structure of it can be changed later. You'll figure out how you want to find things as you pattern library grows.
+
+#### Abstracting Perceptual Patterns
+Function patterns = components
+Pereceptual patterns = styles (or foundations or design tokens)
+
+#### Organizing Functional Patterns
+If team members don’t know that a pattern exists or can’t find what they need, they are likely to create a new one or go outside the pattern system.
+
+**Organization Options**:
+- Alphabetical
+	- Works until the list becomes too large
+- Hierarchical
+	- Atomic design is one approach to categorization
+		- Too much time can be spent on debating what elements belong to what category
+		- You may just want to do atoms and molecules
+- By Purpose or Structure
+	- e.g. Promotional, Explanation, User actions, Social, Text/content blocks, System messages, etc..
+
+Find a structure that’s right for *your* team. 
+
+### Pattern Documentation
+Start with a lightweight overview of the main patterns. Once you have a simple foundation, you can improve the pattern library over time, by adding features and information the team needs. 
+
+#### Documenting Function Patterns
+Documenation should be focused and easily scannable.
+
+Start with the basics:
+- Name
+	- Display it prominently. It should stand out from the rest of the content.
+	- You should be able to glean the purpose from the name without needing to read the description
+- Purpose
+	- People typically skip descriptions, especially long ones. Focus it. Use one or two sentences to explain what a pattern is and what it's for. Don't be vague.
+		- e.g. Good: “Fact Grid is a shortlist of facts or bits of interesting information. Use Fact Grid to give the reader an immediate impression about the upcoming content.”
+		- e.g. Too Vague: “Use Showcase to present multiple types of information with a media file.”
+	- You can add some design/content recommendations
+		- e.g. "Maximum of 3 lines per fact"
+- Example (visual and code)
+	- Use self-documenting examples. 
+	- Show multiple variants and use cases.
+	- The UI copy should guide usage further. A Billboard should have copy/images that match it's purpose.
+	- Living instances are usually preferred (instead of a screenshot)
+- Variants
+	- We need to see what options are available, as well as how the options are different from one another.
+	- Just showing a solid and a ghost button is not enough. You need to know you should use one over another.
+	- Atlassian describes each button and when to use it.
+		- e.g. Icon and Label: Use when you want to draw more attention to the button, or when an icon helps to convey more meaning.
+
+Additional Information:
+- You may need to add versioning of components
+- You may want to list team members involved in the creation of a pattern (gives them a sense of ownership and helps with future development)
+- You may want to show related patterns if the pattern is not quite what you're looking for. This reduces the change of patterns getting duplicated.
+	- e.g. Not what you're looking for? To group similar conepts and tasks together, use the card component. To create page-level layour, use the layout component. etc.. (Shopify Polaris)
+
+Taking The Pattern Library To The Next Level by Vitaly Friedman has checklists for what patterns to document and what to include with each pattern
+
+#### Documenting Perceptual Patterns
+The focus tends to be on building blocks - color palette, typographic scale, etc. - but we need to know how these properties are used and how they work together.
+
+**Examples:**
+- GOV.UK group colors under categories like text, links, backgrounds, buttons, focus.
+- Polaris points out dos and donts like how blue shouldn't be used for buttons.
+- US Gov shows type pairings and recommended usage.
+- Carbon, in addition to separate color documentation, has a tab with the styles for a specific modules on each component pages
+
+Document your interactive states as well. Display different modules under normal, hover, focus, and selected states.
+
+Document the relationships between elements (between colors, between typography and spacing, etc..). Too much of one color creates a different feel. Display spacious vs normal vs compact modules.
+- Spacious modules may be used for promotional purposes
+- Compacy modules may be used for supporting functions
+
+Instead of isolated on separate pages, styles should be presented in a way that shows how they work together, and that highlights signature patterns and the relationships between various elements.
+
+### Workflow
+Teams with effective pattern libraries have systematic approaches ingrained in their workflow. Some teams, like Airbnb, have strict and precisely specified processes with powerful tooling. Others are much more informal.
+
+#### Process for Adding New Patterns
+Agree on how new patterns will be added to the system.
+
+**Example (Nordnet)** [Link](https://nordnet.design/super-easy-atomic-design-documentation-with-sketch-app-c5eb9df0f6fa):
+1. Submit a design to the UI kit folder on Dropbox
+2. Discuss the inclusion of the pattern as a team
+3. Document any included designs inside the UI kit. Add the new design to the Craft Library which will automatically roll out to the entire team.
+
+Meet every 2 weeks to discuss new submissions. Go through a Trello backlog and decide if a module should be approved for inclusion or archived.
+
+[Process at Shyp](https://medium.com/shyp-design/managing-style-guides-at-shyp-c217116c8126)
+
+To make sure the format of submissions is consistent, have a standard template with simple guidelines, such as name, description, author, and date. What is it? What is it for? How does it achieve its purpose?
+
+#### Criteria for Adding New Patterns
+Have shared criteria for adding (and also updating and removing) patterns.
+
+**Possible Approaches**:
+- Every new element on the site is also automatically added to the pattern library.
+	- First, check if a similar pattern exists already, or if an existing one can be modified.
+- Elements are added only when they’re reused. 
+	- Add modules only on the second, or even third use. 
+	- An element has to prove itself as a pattern before being added to the system, which helps to keep the pattern library lean. With this approach it’s important to have visibility of everything being created and effective communication across teams.
+	- A log of undocumented patterns should also be kept, so the team has full visibility of what’s available, even if it’s not in the pattern library.
+- Elements are added on potential reuse
+	- If an element is defined in a generic way, it is more likely to be reused in the future. 
+	- If a new component has a specific purpose (such as a seasonal promo, a module related to a specific event, and so on), it can be treated as a one-off.
+		- Only make specific components if absolutely necessary. It should be explained why a module needs to be specific.
+
+#### People and Responsibilities
+If everyone contributes to a design system, the designer and developer who create a pattern are responsible for adding it to the pattern library. 
+Sometimes you need a person or group of people responsible for curating and maintaining the pattern library, even if everyone contributes to it.
+
+A dedicated systems team should have one of these roles (or both):
+- **Curator**: If a submitted pattern doesn't meet standards, the team encourages the designers/developers who created it to change it, rather than making the change themselves. (Atlassian does this)
+	- Best for distributed teams with looser system structures
+- **Producer**: The team accepts submissions across the company, but have final say over what is included, adjusted or removed. Designers will work closely with designers in different teams to give feedback, ask questions, or propose missing patterns. (Airbnb does this)
+	- Best for stricter more centralized systems
+
+It's important that systems teams are seen as partners, rather than police. Don't create a situation where people go away and do a lot of work only for you to veto or approve it.
+
+#### Aligning Facets of the System
+The team following the same approach across facets -- naming, structures, understanding of purpose -- is more important fully synchronizing your patterns.
+
+Be consistent in naming/folder structure across your design files, component library, and code.
+
+Designers at Nordnet even follow BEM naming conventions in design files, so developers and designers speak the same language.
+
+Alignment makes sychronization easier.
+
+### Tools
+There are a few different approaches to keeping a pattern library in sync with production code.
+
+Note: Full synchronization between a pattern library and code is extremely difficult to achieve. In stricter systems and centralized organization it is more important, whereas companies with looser structures are more tolerant to having it out of sync.
+
+#### Keeping the Pattern Library Up To Date
+Methods:
+- Use CSS documentation parsing tools such as [KSS](https://warpspire.com/kss). Comments in CSS --> script --> markup is generated
+- Style Guide Generators like [Pattern Lab](http://patternlab.io)
+- [Fractal](http://smashed.by/fractal) by Mark Perkins helps build and document a pattern library - is flexible and unopinionated
+- 
+#### Keeping Master Design Files Up To Date
+
+#### Pattern Library as the Source of Truth
+
+### The Future of Pattern Libraries
 
