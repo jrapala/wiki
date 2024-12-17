@@ -6,14 +6,14 @@
 
 | Task                                                    | Command                                                      | Notes                                                        |
 | ------------------------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| Copy File to New File                                   | `$ cp beep.txt message.txt`                                  | Copy the contents of `beep.txt` to a new file called `message.txt` |
-| Copy File to Directory                                  | `$ cp beep.txt ../`                                          | Copy the contents of `beep.txt` to a new file called `beep.txt` in the parent directory. |
-| Copy Files to Directory                                 | `$ cp beep.txt book.txt cool`                                | Copy contents of two files to new files in `cool`.           |
+| Copy File to New File                                   | `$ cp beep.txt message.txt`                                      | Copy the contents of `beep.txt` to a new file called `message.txt` |
+| Copy File to Directory                                  | `$ cp beep.txt ../`                                             | Copy the contents of `beep.txt` to a new file called `beep.txt` in the parent directory. |
+| Copy Files to Directory                                 | `$ cp beep.txt book.txt cool`                                    | Copy contents of two files to new files in `cool`.           |
 | Copy All Files In a Directory, Including Subdirectories | `$ cp -r xyz newzyx` (recursively copies) (`-R` and `--recurvise` do the same thing) |                                                              |
-| Rename or Overwrite Files and Directories               | `$ mv message.txt msg.txt`                                   | Renames `message.txt` to `msg.txt` (or overwrites `msg.tx` if that existed). You don't have to worry about moving files inside a directory during this. |
-| Make a New Directory                                    | `$ mkdir`                                                    | Add `-p` command to make nested directories (e.g. `$ mkdir -p a/b/c/d`). If directory `a` already exists, then the new subdirectories are added to it. |
+| Rename or Overwrite Files and Directories               | `$ mv message.txt msg.txt`                                       | Renames `message.txt` to `msg.txt` (or overwrites `msg.tx` if that existed). You don't have to worry about moving files inside a directory during this. |
+| Make a New Directory                                    | `$ mkdir`                                                      | Add `-p` command to make nested directories (e.g. `$ mkdir -p a/b/c/d`). If directory `a` already exists, then the new subdirectories are added to it. |
 | Autocomplete                                            | Tab                                                          | Pressing tab autocompletes. Pressing tab twice will list all the items that may apply. |
-| Wild Card (*)                                           | `$ cat *.txt`                                                | Will list the contents of all the text files in the directory. e.g. `$ cat b*p.txt` |
+| Wild Card (*)                                           | `$ cat *.txt`                                                  | Will list the contents of all the text files in the directory. e.g. `$ cat b*p.txt` |
 | Delete Files                                            | `$ rm book.txt`                                              |                                                              |
 | Delete Empty Directories                                | `$ rmdir hello`                                              |                                                              |
 | Delete Directory with Files                             | `$ rm -r hello`                                              |                                                              |
